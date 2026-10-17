@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cheers</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #100d20;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    header {
+      padding: 45px 20px 20px;
+    }
+    h1 {
+      color: #ffcc68;
+      font-size: 52px;
+      margin: 0;
+    }
+    p {
+      color: #c9c0da;
+    }
+    .drink {
+      display: block;
+      margin: 35px auto;
+      padding: 25px;
+      width: 220px;
+      border: 2px solid #ffca68;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #4a254b, #17152d);
+      color: white;
+      font-size: 22px;
+      box-shadow: 0 0 30px #ffca6844;
+      cursor: pointer;
+    }
+    .emoji {
+      display: block;
+      font-size: 70px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CHEERS!</h1>
+    <p>A little gift. A big smile.</p>
+  </header>
+
+  <button class="drink" onclick="alert('Coffee selected!')">
+    <span class="emoji">☕</span>
+    Send a Coffee
+    <br>$3
+  </button>
+
+  <p>Visual prototype — payments not connected yet.</p>
+</body>
+</html>
