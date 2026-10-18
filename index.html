@@ -1,103 +1,338 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090d18">
 <title>Cheers!</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at top,#352047,#100d1b 75%);color:white;font-family:Arial,sans-serif;min-height:100vh;text-align:center}
-main{max-width:480px;margin:auto;padding:24px 18px 45px}
-h1{font-size:52px;color:#ffcc72;text-shadow:0 0 24px #e98a41;margin:15px 0 4px}
-.tag{color:#e9cda7;margin-bottom:28px}
-.profile{display:flex;align-items:center;justify-content:center;gap:12px;margin:20px 0 25px}
-.avatar{width:48px;height:48px;border-radius:50%;background:#7b4c92;display:grid;place-items:center;font-size:25px;border:2px solid #e6b85b}
-.profile span{color:#e6d3f4}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.drink{background:linear-gradient(145deg,#4b2b63,#21172f);border:1px solid #ad8252;border-radius:22px;padding:15px 5px;color:white;box-shadow:0 5px 18px #0008;cursor:pointer;min-height:143px}
-.drink:active{transform:scale(.96)}
-.picture{height:72px;display:grid;place-items:center;font-size:48px;border-radius:16px;background:radial-gradient(circle at 40% 20%,#a96b9b66,#161025);margin:0 6px 9px;box-shadow:inset 0 0 15px #ffd17933}
-.name{display:block;font-weight:bold;font-size:13px}
-.price{display:block;color:#ffcf80;margin-top:6px;font-size:14px}
-footer{color:#a899b6;font-size:12px;margin-top:32px}
-.overlay{position:fixed;inset:0;background:#0009;display:none;align-items:flex-end;justify-content:center}
-.overlay.show{display:flex}
-.sheet{background:#21182f;border:1px solid #bc9157;border-radius:26px 26px 0 0;padding:30px 24px 40px;width:100%;max-width:480px;box-shadow:0 -12px 45px #0008}
-.sheet h2{color:#ffcd76}
-.action{background:#ffcb73;color:#201426;border:0;border-radius:14px;padding:15px 20px;font-size:17px;font-weight:bold;width:100%;margin:10px 0;cursor:pointer}
-.secondary{background:transparent;color:#e5d2ec;border:1px solid #736083}
-.note{color:#cbbbd2;font-size:13px}
-#success{display:none}
-.celebrate{font-size:68px}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: white;
+  background: radial-gradient(ellipse at top,
+    #29364c 0%, #151b2b 45%, #090d18 90%);
+}
+main {
+  max-width: 500px;
+  margin: auto;
+  padding: 30px 16px 60px;
+}
+header { text-align: center; }
+h1 {
+  font-size: 52px;
+  margin: 5px 0;
+  letter-spacing: 2px;
+  color: #ffcc85;
+  text-shadow: 0 0 25px #e58b4a88;
+}
+.tagline {
+  color: #d7c7bd;
+  font-size: 14px;
+}
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 28px 0;
+  font-size: 15px;
+}
+.avatar {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  border-radius: 50%;
+  background: #79527e;
+  border: 2px solid #ffd095;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 11px;
+}
+.gift {
+  min-width: 0;
+  min-height: 155px;
+  padding: 11px 5px;
+  border: 1px solid #ab8d9b;
+  border-radius: 20px;
+  background: linear-gradient(150deg, #453c63, #222c47);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 8px 20px #0005,
+    inset 0 1px 0 #ffffff33;
+  transition: transform .15s, border-color .15s;
+}
+.gift:hover {
+  transform: translateY(-3px);
+  border-color: #ffd39a;
+}
+.gift:active { transform: scale(.96); }
+.picture {
+  height: 83px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(ellipse at top left,
+    #a28bb777, #292842);
+}
+.picture span {
+  font-size: 51px;
+  filter: drop-shadow(0 6px 5px #0008);
+}
+.name {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+}
+.price {
+  display: block;
+  margin-top: 6px;
+  color: #ffd18e;
+  font-size: 14px;
+  font-weight: bold;
+}
+footer {
+  text-align: center;
+  color: #a5a8ba;
+  font-size: 11px;
+  margin-top: 28px;
+}
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #030610bd;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 10;
+}
+.overlay.open { display: flex; }
+.sheet {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px 24px 32px;
+  border-radius: 28px 28px 0 0;
+  border: 1px solid #997e91;
+  background: linear-gradient(145deg, #28344c, #151b30);
+  box-shadow: 0 -15px 50px #000a;
+  animation: slideUp .25s ease-out;
+}
+.handle {
+  width: 48px;
+  height: 5px;
+  margin: 0 auto 20px;
+  border-radius: 8px;
+  background: #85899a;
+}
+.sheet h2 { margin: 0 0 10px; }
+.sheet p {
+  color: #c7cbd8;
+  font-size: 14px;
+}
+.summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 0;
+  border-bottom: 1px solid #ffffff33;
+}
+.summary strong { color: #ffd18e; }
+.action {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  margin-top: 17px;
+  border: none;
+  border-radius: 14px;
+  background: #ffd18e;
+  color: #1c2230;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.secondary {
+  background: transparent;
+  border: 1px solid #65718a;
+  color: white;
+  margin-top: 10px;
+}
+.note {
+  text-align: center;
+  font-size: 12px !important;
+}
+.success {
+  display: none;
+  text-align: center;
+  padding: 20px 0;
+}
+.success .glasses {
+  font-size: 75px;
+  animation: celebrate .6s ease-out;
+}
+.success h2 {
+  font-size: 34px;
+  color: #ffd18e;
+  margin: 10px 0;
+}
+@keyframes slideUp {
+  from { transform: translateY(45px); opacity: .4; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes celebrate {
+  0% { transform: scale(.3) rotate(-25deg); }
+  70% { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1); }
+}
+@media (max-width: 370px) {
+  main { padding-left: 10px; padding-right: 10px; }
+  .grid { gap: 7px; }
+  .gift { min-height: 140px; }
+  .picture { height: 70px; }
+  .picture span { font-size: 43px; }
+}
 </style>
 </head>
 <body>
+
 <main>
-<h1>CHEERS!</h1>
-<div class="tag">A little gift. A big smile.</div>
-<div class="profile">
-<div class="avatar">👩</div>
-<span>Send a little happiness to Maly</span>
-</div>
-<div class="grid" id="drinks"></div>
-<footer>Cheers visual prototype · No real payments</footer>
+  <header>
+    <h1>CHEERS!</h1>
+    <div class="tagline">A little gift. A big smile.</div>
+  </header>
+
+  <div class="profile">
+    <div class="avatar">👩</div>
+    <span>Send a little happiness to <b>Maly</b></span>
+  </div>
+
+  <div class="grid" id="gifts"></div>
+
+  <footer>
+    Cheers visual prototype · No real payments
+  </footer>
 </main>
 
 <div class="overlay" id="overlay">
-<div class="sheet">
-<div id="checkout">
-<h2 id="selection">Your gift</h2>
-<p class="note">Payment preview only</p>
-<button class="action" onclick="showSuccess()">Preview successful payment</button>
-<button class="action secondary" onclick="closeSheet()">Back to drinks</button>
-</div>
-<div id="success">
-<div class="celebrate">🥂✨</div>
-<h2>Cheers!</h2>
-<p>Your gift is ready to celebrate.</p>
-<p class="note">Demo only — no payment or gift was sent.</p>
-<button class="action" onclick="closeSheet()">Back to Cheers</button>
-</div>
-</div>
+  <div class="sheet">
+    <div class="handle"></div>
+
+    <div id="payment">
+      <h2>Send a little happiness</h2>
+      <p>Your gift for Maly</p>
+
+      <div class="summary">
+        <span id="selectedName"></span>
+        <strong id="selectedPrice"></strong>
+      </div>
+
+      <button class="action" id="previewButton">
+        Preview celebration
+      </button>
+
+      <button class="action secondary" id="cancelButton">
+        Back to gifts
+      </button>
+
+      <p class="note">
+        Demonstration only. No payment will be taken.
+      </p>
+    </div>
+
+    <div class="success" id="success">
+      <div class="glasses">🥂</div>
+      <h2>CHEERS!</h2>
+      <p id="successMessage"></p>
+      <button class="action" id="backButton">
+        Back to gifts
+      </button>
+    </div>
+  </div>
 </div>
 
 <script>
-// CHANGE PRICES HERE WHEN YOU ARE READY
-const products=[
-{name:"Coffee",emoji:"☕",price:3.00},
-{name:"Beer",emoji:"🍺",price:4.99},
-{name:"Cocktail",emoji:"🍸",price:5.99},
-{name:"Wine",emoji:"🍷",price:6.99},
-{name:"Shot",emoji:"🥃",price:4.99},
-{name:"Champagne",emoji:"🍾",price:9.99},
-{name:"Ring the Bell",emoji:"🔔",price:14.99}
+const gifts = [
+  { name: "Coffee", price: 3.00, icon: "☕" },
+  { name: "Beer", price: 4.99, icon: "🍺" },
+  { name: "Cocktail", price: 5.99, icon: "🍸" },
+  { name: "Wine", price: 6.99, icon: "🍷" },
+  { name: "Shot", price: 4.99, icon: "🥃" },
+  { name: "Champagne", price: 9.99, icon: "🍾" },
+  { name: "Ring the Bell", price: 14.99, icon: "🔔" }
 ];
 
-const grid=document.getElementById("drinks");
-products.forEach((p,i)=>{
-const b=document.createElement("button");
-b.className="drink";
-b.innerHTML='<span class="picture">'+p.emoji+'</span><span class="name">'+p.name+'</span><span class="price">$'+p.price.toFixed(2)+'</span>';
-b.onclick=()=>selectDrink(i);
-grid.appendChild(b);
+const grid = document.getElementById("gifts");
+const overlay = document.getElementById("overlay");
+const payment = document.getElementById("payment");
+const success = document.getElementById("success");
+
+let chosenGift = null;
+
+gifts.forEach(gift => {
+  const button = document.createElement("button");
+  button.className = "gift";
+  button.type = "button";
+
+  button.innerHTML = `
+    <div class="picture">
+      <span>${gift.icon}</span>
+    </div>
+    <span class="name">${gift.name}</span>
+    <span class="price">$${gift.price.toFixed(2)}</span>
+  `;
+
+  button.addEventListener("click", () => {
+    chosenGift = gift;
+
+    document.getElementById("selectedName").textContent =
+      gift.name;
+
+    document.getElementById("selectedPrice").textContent =
+      "$" + gift.price.toFixed(2);
+
+    payment.style.display = "block";
+    success.style.display = "none";
+    overlay.classList.add("open");
+  });
+
+  grid.appendChild(button);
 });
 
-function selectDrink(i){
-const p=products[i];
-document.getElementById("selection").textContent=p.name+" — $"+p.price.toFixed(2);
-document.getElementById("checkout").style.display="block";
-document.getElementById("success").style.display="none";
-document.getElementById("overlay").classList.add("show");
+function closeOverlay() {
+  overlay.classList.remove("open");
 }
-function closeSheet(){
-document.getElementById("overlay").classList.remove("show");
-}
-function showSuccess(){
-document.getElementById("checkout").style.display="none";
-document.getElementById("success").style.display="block";
-}
+
+document.getElementById("cancelButton")
+  .addEventListener("click", closeOverlay);
+
+document.getElementById("backButton")
+  .addEventListener("click", closeOverlay);
+
+document.getElementById("previewButton")
+  .addEventListener("click", () => {
+    if (!chosenGift) return;
+
+    document.getElementById("successMessage").textContent =
+      "A " + chosenGift.name.toLowerCase() +
+      " for Maly. A little gift. A big smile.";
+
+    payment.style.display = "none";
+    success.style.display = "block";
+  });
+
+overlay.addEventListener("click", event => {
+  if (event.target === overlay) closeOverlay();
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeOverlay();
+});
 </script>
+
 </body>
 </html>
-
