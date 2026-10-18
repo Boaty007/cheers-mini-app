@@ -331,14 +331,83 @@ footer {
   .picture { height: 70px; }
   .picture span { font-size: 43px; }
 }
-</style>
-</head>
-<body>
 
+<
+/* Animated champagne celebration */
+
+.clinking-glasses {
+  position: relative;
+  height: 125px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.glass-left {
+  display: inline-block;
+  font-size: 78px;
+  transform-origin: center bottom;
+  animation: champagneClink 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 15px #ffce64);
+}
+
+.bubbles {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  font-size: 24px;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: champagneBubbles 2.5s ease-out infinite;
+}
+
+@keyframes champagneClink {
+  0%, 100% {
+    transform: scale(.85) rotate(-12deg);
+  }
+  35% {
+    transform: scale(1.15) rotate(10deg);
+  }
+  48% {
+    transform: scale(1.25) rotate(-5deg);
+  }
+  70% {
+    transform: scale(1.05) rotate(0deg);
+  }
+}
+
+@keyframes champagneBubbles {
+  0%, 30% {
+    opacity: 0;
+    transform: translate(-50%, 25px) scale(.3);
+  }
+  45% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -90px) scale(1.5);
+  }
+}
+
+.success h2 {
+  text-shadow:
+    0 0 8px #ffd76b,
+    0 0 20px #ffac35,
+    0 0 35px #ff37ba;
+ animation: cheersGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes cheersGlow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.5); }
+}
+</style>
+<body>
 <main>
-  <header>
-    <h1>CHEERS!</h1>
-    <div class="tagline">A little gift. A big smile.</div>
+  <header>  <header>
+    <h1>CHEERS!</h1>    <div class="tagline">A little gift. A big smile.</div>
   </header>
 
   <div class="profile">
@@ -379,15 +448,17 @@ footer {
       </p>
     </div>
 
-    <div class="success" id="success">
-      <div class="glasses">🥂</div>
-      <h2>CHEERS!</h2>
-      <p id="successMessage"></p>
-      <button class="action" id="backButton">
-        Back to gifts
-      </button>
-    </div>
+  <div class="success" id="success">
+  <div class="clinking-glasses">
+    <span class="glass-left">🥂</span>
+    <span class="bubbles">✨ 🫧 ✨</span>
   </div>
+  <h2>CHEERS!</h2>
+  <p id="successMessage"></p>
+  <button class="action" id="backButton">
+    Back to gifts
+  </button>
+</div>  </div>
 </div>
 
 <script>
