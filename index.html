@@ -1,61 +1,103 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cheers</title>
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #100d20;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-    header {
-      padding: 45px 20px 20px;
-    }
-    h1 {
-      color: #ffcc68;
-      font-size: 52px;
-      margin: 0;
-    }
-    p {
-      color: #c9c0da;
-    }
-    .drink {
-      display: block;
-      margin: 35px auto;
-      padding: 25px;
-      width: 220px;
-      border: 2px solid #ffca68;
-      border-radius: 24px;
-      background: linear-gradient(135deg, #4a254b, #17152d);
-      color: white;
-      font-size: 22px;
-      box-shadow: 0 0 30px #ffca6844;
-      cursor: pointer;
-    }
-    .emoji {
-      display: block;
-      font-size: 70px;
-      margin-bottom: 15px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cheers!</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#352047,#100d1b 75%);color:white;font-family:Arial,sans-serif;min-height:100vh;text-align:center}
+main{max-width:480px;margin:auto;padding:24px 18px 45px}
+h1{font-size:52px;color:#ffcc72;text-shadow:0 0 24px #e98a41;margin:15px 0 4px}
+.tag{color:#e9cda7;margin-bottom:28px}
+.profile{display:flex;align-items:center;justify-content:center;gap:12px;margin:20px 0 25px}
+.avatar{width:48px;height:48px;border-radius:50%;background:#7b4c92;display:grid;place-items:center;font-size:25px;border:2px solid #e6b85b}
+.profile span{color:#e6d3f4}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.drink{background:linear-gradient(145deg,#4b2b63,#21172f);border:1px solid #ad8252;border-radius:22px;padding:15px 5px;color:white;box-shadow:0 5px 18px #0008;cursor:pointer;min-height:143px}
+.drink:active{transform:scale(.96)}
+.picture{height:72px;display:grid;place-items:center;font-size:48px;border-radius:16px;background:radial-gradient(circle at 40% 20%,#a96b9b66,#161025);margin:0 6px 9px;box-shadow:inset 0 0 15px #ffd17933}
+.name{display:block;font-weight:bold;font-size:13px}
+.price{display:block;color:#ffcf80;margin-top:6px;font-size:14px}
+footer{color:#a899b6;font-size:12px;margin-top:32px}
+.overlay{position:fixed;inset:0;background:#0009;display:none;align-items:flex-end;justify-content:center}
+.overlay.show{display:flex}
+.sheet{background:#21182f;border:1px solid #bc9157;border-radius:26px 26px 0 0;padding:30px 24px 40px;width:100%;max-width:480px;box-shadow:0 -12px 45px #0008}
+.sheet h2{color:#ffcd76}
+.action{background:#ffcb73;color:#201426;border:0;border-radius:14px;padding:15px 20px;font-size:17px;font-weight:bold;width:100%;margin:10px 0;cursor:pointer}
+.secondary{background:transparent;color:#e5d2ec;border:1px solid #736083}
+.note{color:#cbbbd2;font-size:13px}
+#success{display:none}
+.celebrate{font-size:68px}
+</style>
 </head>
 <body>
-  <header>
-    <h1>CHEERS!</h1>
-    <p>A little gift. A big smile.</p>
-  </header>
+<main>
+<h1>CHEERS!</h1>
+<div class="tag">A little gift. A big smile.</div>
+<div class="profile">
+<div class="avatar">👩</div>
+<span>Send a little happiness to Maly</span>
+</div>
+<div class="grid" id="drinks"></div>
+<footer>Cheers visual prototype · No real payments</footer>
+</main>
 
-  <button class="drink" onclick="alert('Coffee selected!')">
-    <span class="emoji">☕</span>
-    Send a Coffee
-    <br>$3
-  </button>
+<div class="overlay" id="overlay">
+<div class="sheet">
+<div id="checkout">
+<h2 id="selection">Your gift</h2>
+<p class="note">Payment preview only</p>
+<button class="action" onclick="showSuccess()">Preview successful payment</button>
+<button class="action secondary" onclick="closeSheet()">Back to drinks</button>
+</div>
+<div id="success">
+<div class="celebrate">🥂✨</div>
+<h2>Cheers!</h2>
+<p>Your gift is ready to celebrate.</p>
+<p class="note">Demo only — no payment or gift was sent.</p>
+<button class="action" onclick="closeSheet()">Back to Cheers</button>
+</div>
+</div>
+</div>
 
-  <p>Visual prototype — payments not connected yet.</p>
+<script>
+// CHANGE PRICES HERE WHEN YOU ARE READY
+const products=[
+{name:"Coffee",emoji:"☕",price:3.00},
+{name:"Beer",emoji:"🍺",price:4.99},
+{name:"Cocktail",emoji:"🍸",price:5.99},
+{name:"Wine",emoji:"🍷",price:6.99},
+{name:"Shot",emoji:"🥃",price:4.99},
+{name:"Champagne",emoji:"🍾",price:9.99},
+{name:"Ring the Bell",emoji:"🔔",price:14.99}
+];
+
+const grid=document.getElementById("drinks");
+products.forEach((p,i)=>{
+const b=document.createElement("button");
+b.className="drink";
+b.innerHTML='<span class="picture">'+p.emoji+'</span><span class="name">'+p.name+'</span><span class="price">$'+p.price.toFixed(2)+'</span>';
+b.onclick=()=>selectDrink(i);
+grid.appendChild(b);
+});
+
+function selectDrink(i){
+const p=products[i];
+document.getElementById("selection").textContent=p.name+" — $"+p.price.toFixed(2);
+document.getElementById("checkout").style.display="block";
+document.getElementById("success").style.display="none";
+document.getElementById("overlay").classList.add("show");
+}
+function closeSheet(){
+document.getElementById("overlay").classList.remove("show");
+}
+function showSuccess(){
+document.getElementById("checkout").style.display="none";
+document.getElementById("success").style.display="block";
+}
+</script>
 </body>
 </html>
+
