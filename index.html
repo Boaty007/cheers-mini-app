@@ -5,883 +5,602 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#422442">
 <title>Cheers!</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: Arial, Helvetica, sans-serif;
-  color: white;
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;
+  font-family:Arial,Helvetica,sans-serif;color:white;
   background:
-    radial-gradient(ellipse at 15% 4%, #ef86ba55, transparent 45%),
-    radial-gradient(ellipse at 92% 27%, #ab7de355, transparent 48%),
-    linear-gradient(160deg, #422442, #694369 46%, #352143);
-  background-attachment: fixed;
+    radial-gradient(ellipse at 15% 4%,#ef86ba55,transparent 45%),
+    radial-gradient(ellipse at 92% 27%,#ab7de355,transparent 48%),
+    linear-gradient(160deg,#422442,#694369 46%,#352143);
+  background-attachment:fixed;
 }
-
-/* Romantic, hand-drawn repeating wallpaper */
-.wallpaper {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  opacity: .33;
+.wallpaper{
+  position:fixed;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;opacity:.33;
 }
-
-main {
-  position: relative;
-  z-index: 1;
-  max-width: 500px;
-  margin: auto;
-  padding: 25px 15px 55px;
+main{
+  position:relative;z-index:1;max-width:500px;
+  margin:auto;padding:25px 15px 55px;
 }
-
-header {
-  text-align: center;
-  padding: 8px 0 16px;
+header{text-align:center;padding:8px 0 16px}
+.neon-marquee{
+  display:grid;
+  grid-template-columns:66px minmax(0,1fr) 66px;
+  align-items:center;justify-items:center;
+  gap:0;width:100%;min-height:112px;
 }
-
-.neon-marquee {
-  display: grid;
-  grid-template-columns: 43px minmax(0,1fr) 43px;
-  align-items: center;
-  justify-items: center;
-  gap: 3px;
-  width: 100%;
-  min-height: 100px;
+h1{
+  font-family:"Pacifico","Brush Script MT",cursive;
+  font-size:clamp(38px,11.5vw,69px);
+  font-weight:400;line-height:1.5;
+  white-space:nowrap;margin:0;color:#fff1fb;
+  transform:rotate(-3deg);
+  -webkit-text-stroke:.65px #ff8acb;
+  animation:neonColours 6s ease-in-out infinite;
 }
-
-h1 {
-  font-family: "Pacifico", "Brush Script MT", cursive;
-  font-size: clamp(40px, 12vw, 72px);
-  font-weight: 400;
-  line-height: 1.5;
-  white-space: nowrap;
-  margin: 0;
-  color: #fff1fb;
-  transform: rotate(-3deg);
-  -webkit-text-stroke: .65px #ff8acb;
-  animation: neonColours 6s ease-in-out infinite;
-}
-
-@keyframes neonColours {
-  0%, 100% {
-    color: #fff1fb;
-    text-shadow:
-      0 0 3px white,
-      0 0 9px #ff94d9,
-      0 0 22px #ff2fa7,
-      0 0 45px #d72bd6;
+@keyframes neonColours{
+  0%,100%{
+    color:#fff1fb;
+    text-shadow:0 0 3px white,0 0 9px #ff94d9,
+      0 0 22px #ff2fa7,0 0 45px #d72bd6;
   }
-  25% {
-    color: #e7fcff;
-    text-shadow:
-      0 0 3px white,
-      0 0 10px #80ecff,
-      0 0 23px #00c9ff,
-      0 0 45px #4b69ff;
+  25%{
+    color:#e7fcff;
+    text-shadow:0 0 3px white,0 0 10px #80ecff,
+      0 0 23px #00c9ff,0 0 45px #4b69ff;
   }
-  50% {
-    color: #fff4cd;
-    text-shadow:
-      0 0 3px white,
-      0 0 10px #ffe0a0,
-      0 0 23px #ffb72e,
-      0 0 45px #ff6d6d;
+  50%{
+    color:#fff4cd;
+    text-shadow:0 0 3px white,0 0 10px #ffe0a0,
+      0 0 23px #ffb72e,0 0 45px #ff6d6d;
   }
-  75% {
-    color: #fff1fb;
-    text-shadow:
-      0 0 3px white,
-      0 0 10px #ff94d9,
-      0 0 23px #ff2fa7,
-      0 0 45px #d72bd6;
+  75%{
+    color:#fff1fb;
+    text-shadow:0 0 3px white,0 0 10px #ff94d9,
+      0 0 23px #ff2fa7,0 0 45px #d72bd6;
   }
 }
-
-.neon-symbol {
-  width: 42px;
-  height: 52px;
-  fill: none;
-  stroke-width: 3.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  animation: symbolGlow 5s ease-in-out infinite;
+.neon-symbol{
+  width:76px;height:94px;overflow:visible;
+  fill:none;stroke-width:3.5;
+  stroke-linecap:round;stroke-linejoin:round;
+  animation:symbolGlow 5s ease-in-out infinite;
 }
-
-.neon-heart {
-  stroke: #ffd9f0;
-  color: #ff67ba;
+.neon-heart{stroke:#ffd9f0;color:#ff67ba}
+.neon-cocktail{
+  stroke:#d9faff;color:#33dcff;
+  animation-delay:-2s;
 }
-
-.neon-cocktail {
-  stroke: #d9faff;
-  color: #33dcff;
-  animation-delay: -2s;
+.neon-cocktail circle{
+  fill:#ff82d4;stroke:#fff0f9;stroke-width:1.5;
 }
-
-.neon-cocktail circle {
-  fill: #ff82d4;
-  stroke: #fff0f9;
-  stroke-width: 1.5;
-}
-
-@keyframes symbolGlow {
-  0%, 100% {
-    opacity: 1;
-    filter:
-      drop-shadow(0 0 4px currentColor)
-      drop-shadow(0 0 12px currentColor);
+@keyframes symbolGlow{
+  0%,100%{
+    opacity:1;
+    filter:drop-shadow(0 0 4px currentColor)
+           drop-shadow(0 0 12px currentColor);
   }
-  50% {
-    opacity: .85;
-    filter:
-      drop-shadow(0 0 8px currentColor)
-      drop-shadow(0 0 20px currentColor);
+  50%{
+    opacity:.85;
+    filter:drop-shadow(0 0 8px currentColor)
+           drop-shadow(0 0 20px currentColor);
   }
 }
-
-.tagline {
-  color: #f0cce3;
-  font-size: 14px;
-  margin-top: 5px;
+.tagline{
+  color:#f0cce3;font-size:14px;margin-top:5px;
 }
-
-header::after {
-  content: "";
-  display: block;
-  height: 4px;
-  width: 82%;
-  margin: 20px auto 0;
-  border-radius: 20px;
-  background: linear-gradient(
-    90deg, transparent, #f23abb, #04dafa,
-    #f23abb, transparent
-  );
-  box-shadow: 0 0 15px #f23abb;
+header::after{
+  content:"";display:block;height:4px;width:82%;
+  margin:20px auto 0;border-radius:20px;
+  background:linear-gradient(90deg,transparent,#f23abb,
+    #04dafa,#f23abb,transparent);
+  box-shadow:0 0 15px #f23abb;
 }
-
-.profile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin: 24px 0;
-  font-size: 14px;
-  color: #eee1ec;
+.profile{
+  display:flex;align-items:center;justify-content:center;
+  gap:12px;margin:24px 0;font-size:14px;color:#eee1ec;
 }
-
-.avatar {
-  width: 47px;
-  height: 47px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 25px;
-  background: #39204b;
-  border: 2px solid #ffd27a;
-  box-shadow: 0 0 16px #ffbc65aa;
+.avatar{
+  width:47px;height:47px;border-radius:50%;
+  display:grid;place-items:center;font-size:25px;
+  background:#39204b;border:2px solid #ffd27a;
+  box-shadow:0 0 16px #ffbc65aa;
 }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 10px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
 }
-
-/* Ring the Bell sits in the bottom centre */
-.grid > .gift:last-child:nth-child(3n + 1) {
-  grid-column: 2;
+.grid>.gift:last-child:nth-child(3n + 1){
+  grid-column:2;
 }
-
-.gift {
-  position: relative;
-  min-width: 0;
-  min-height: 150px;
-  padding: 9px 4px 12px;
-  border: 2px solid #b67c4c;
-  border-radius: 19px;
-  background: linear-gradient(
-    145deg, #633b68f2, #2d1b41f2 75%
-  );
-  color: white;
-  cursor: pointer;
-  box-shadow:
-    inset 0 1px 0 #fff4c344,
-    0 0 12px #a56d3d44;
-  transition: transform .2s, border-color .2s;
+.gift{
+  position:relative;min-width:0;min-height:150px;
+  padding:9px 4px 12px;
+  border:2px solid #b67c4c;border-radius:19px;
+  background:linear-gradient(145deg,#633b68f2,#2d1b41f2 75%);
+  color:white;cursor:pointer;
+  box-shadow:inset 0 1px 0 #fff4c344,0 0 12px #a56d3d44;
+  transition:transform .2s,border-color .2s;
 }
-
-.gift:hover,
-.gift:focus-visible {
-  outline: 0;
-  transform: translateY(-3px);
-  border-width: 3px;
-  border-color: #ffe9a4;
-  animation: giftGlow 1.8s ease-in-out infinite;
+.gift:hover,.gift:focus-visible{
+  outline:0;transform:translateY(-3px);
+  border-width:3px;border-color:#ffe9a4;
+  animation:giftGlow 1.8s ease-in-out infinite;
 }
-
-.gift:active {
-  transform: scale(.97);
-}
-
-@keyframes giftGlow {
-  0%, 100% {
-    box-shadow:
-      0 0 8px #ffe8aa,
-      0 0 22px #ffc145,
+.gift:active{transform:scale(.97)}
+@keyframes giftGlow{
+  0%,100%{
+    box-shadow:0 0 8px #ffe8aa,0 0 22px #ffc145,
       0 0 36px #ff9a0044;
   }
-  50% {
-    box-shadow:
-      0 0 14px #fff5c8,
-      0 0 29px #ffbc4a,
+  50%{
+    box-shadow:0 0 14px #fff5c8,0 0 29px #ffbc4a,
       0 0 44px #ffa50088;
   }
 }
-
-.picture {
-  height: 82px;
-  display: grid;
-  place-items: center;
-  margin-bottom: 9px;
-  border-radius: 13px;
-  background: radial-gradient(
-    ellipse at 50% 65%, #a24b8655, transparent 72%
-  );
+.picture{
+  height:82px;display:grid;place-items:center;
+  margin-bottom:9px;border-radius:13px;
+  background:radial-gradient(ellipse at 50% 65%,
+    #a24b8655,transparent 72%);
+}
+.picture span{
+  font-size:51px;filter:drop-shadow(0 0 9px #efb45277);
+}
+.name{display:block;font-size:12px;font-weight:800}
+.price{
+  display:block;margin-top:5px;font-size:14px;
+  color:#ffd58e;font-weight:800;
+}
+footer{
+  text-align:center;color:#c9b4cb;
+  font-size:11px;margin-top:25px;
 }
 
-.picture span {
-  font-size: 51px;
-  filter: drop-shadow(0 0 9px #efb45277);
+/* Gift preview */
+.overlay{
+  position:fixed;inset:0;z-index:20;
+  background:#030512bc;display:none;
+  align-items:flex-end;justify-content:center;
 }
-
-.name {
-  display: block;
-  font-size: 12px;
-  font-weight: 800;
+.overlay.open{display:flex}
+.sheet{
+  width:100%;max-width:500px;max-height:94dvh;
+  overflow-y:auto;
+  padding:17px 23px calc(24px + env(safe-area-inset-bottom));
+  border:1px solid #d8a36e;border-bottom:0;
+  border-radius:28px 28px 0 0;
+  background:linear-gradient(155deg,#593458,#362342 68%,#241b34);
+  box-shadow:0 -14px 48px #000a;
+  animation:sheetRise .28s ease-out;
 }
-
-.price {
-  display: block;
-  margin-top: 5px;
-  font-size: 14px;
-  color: #ffd58e;
-  font-weight: 800;
+@keyframes sheetRise{
+  from{transform:translateY(40px);opacity:.5}
+  to{transform:translateY(0);opacity:1}
 }
-
-footer {
-  text-align: center;
-  color: #c9b4cb;
-  font-size: 11px;
-  margin-top: 25px;
+.handle{
+  width:48px;height:5px;margin:0 auto 18px;
+  background:#8990a3;border-radius:10px;
 }
-
-/* Sliding gift preview */
-.overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  background: #030512bc;
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
+.sheet h2{margin:0 0 9px}
+.sheet p{color:#e3d5e7;font-size:14px;line-height:1.5}
+.summary{
+  display:flex;justify-content:space-between;
+  padding:17px 0;border-bottom:1px solid #ffffff30;
 }
-
-.overlay.open { display: flex; }
-
-.sheet {
-  width: 100%;
-  max-width: 500px;
-  max-height: 94dvh;
-  overflow-y: auto;
-  padding: 17px 23px calc(24px + env(safe-area-inset-bottom));
-  border: 1px solid #d8a36e;
-  border-bottom: 0;
-  border-radius: 28px 28px 0 0;
-  background: linear-gradient(
-    155deg, #593458, #362342 68%, #241b34
-  );
-  box-shadow: 0 -14px 48px #000a;
-  animation: sheetRise .28s ease-out;
+.summary strong{color:#ffd18e}
+.action{
+  display:block;width:100%;border:0;border-radius:14px;
+  padding:16px;margin-top:16px;background:#ffd18e;
+  color:#1b2333;font-weight:800;font-size:16px;
+  cursor:pointer;
 }
-
-@keyframes sheetRise {
-  from {
-    transform: translateY(40px);
-    opacity: .5;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.secondary{
+  background:transparent;color:white;
+  border:1px solid #a68aa8;margin-top:10px;
 }
+.note{text-align:center;font-size:12px!important}
 
-.handle {
-  width: 48px;
-  height: 5px;
-  margin: 0 auto 18px;
-  background: #8990a3;
-  border-radius: 10px;
+/* Celebration */
+.success{
+  display:none;text-align:center;padding:0 0 6px;
 }
-
-.sheet h2 { margin: 0 0 9px; }
-
-.sheet p {
-  color: #e3d5e7;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.summary {
-  display: flex;
-  justify-content: space-between;
-  padding: 17px 0;
-  border-bottom: 1px solid #ffffff30;
-}
-
-.summary strong { color: #ffd18e; }
-
-.action {
-  display: block;
-  width: 100%;
-  border: 0;
-  border-radius: 14px;
-  padding: 16px;
-  margin-top: 16px;
-  background: #ffd18e;
-  color: #1b2333;
-  font-weight: 800;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.secondary {
-  background: transparent;
-  color: white;
-  border: 1px solid #a68aa8;
-  margin-top: 10px;
-}
-
-.note {
-  text-align: center;
-  font-size: 12px !important;
-}
-
-/* Champagne celebration */
-.success {
-  display: none;
-  text-align: center;
-  padding: 0 0 6px;
-}
-
-.success h2 {
-  font: 900 clamp(36px,10vw,51px) Georgia,serif;
-  letter-spacing: 2px;
-  margin: 0;
-  color: #fff3b1;
-  -webkit-text-stroke: .6px #ffc365;
-  text-shadow:
-    0 0 8px #ffb63c,
-    0 0 22px #ff9b2e,
+.success h2{
+  font:900 clamp(36px,10vw,51px) Georgia,serif;
+  letter-spacing:2px;margin:0;color:#fff3b1;
+  -webkit-text-stroke:.6px #ffc365;
+  text-shadow:0 0 8px #ffb63c,0 0 22px #ff9b2e,
     0 0 35px #ec30b8;
 }
-
-.success p { margin: 14px 0 18px; }
-
-.celebration {
-  position: relative;
-  height: 207px;
-  max-width: 340px;
-  margin: 0 auto;
-  isolation: isolate;
-  overflow: hidden;
+.success p{margin:14px 0 18px}
+.celebration{
+  position:relative;height:207px;max-width:340px;
+  margin:0 auto;isolation:isolate;overflow:hidden;
 }
-
-.celebration::before {
-  content: "";
-  position: absolute;
-  inset: 36px 28px 3px;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse, #ffbf3855, transparent 66%
-  );
-  filter: blur(12px);
-  opacity: .6;
+.celebration::before{
+  content:"";position:absolute;inset:36px 28px 3px;
+  border-radius:50%;
+  background:radial-gradient(ellipse,#ffbf3855,transparent 66%);
+  filter:blur(12px);opacity:.6;
 }
-
-.flute {
-  position: absolute;
-  top: 27px;
-  width: 102px;
-  height: 159px;
-  overflow: visible;
-  filter: drop-shadow(0 0 8px #ffc65a88);
+.flute{
+  position:absolute;top:27px;width:102px;height:159px;
+  overflow:visible;filter:drop-shadow(0 0 8px #ffc65a88);
 }
-
-.flute.left {
-  left: calc(50% - 106px);
-  transform-origin: 50% 92%;
+.flute.left{
+  left:calc(50% - 106px);transform-origin:50% 92%;
 }
-
-.flute.right {
-  right: calc(50% - 106px);
-  transform-origin: 50% 92%;
+.flute.right{
+  right:calc(50% - 106px);transform-origin:50% 92%;
 }
-
-.flute .glass {
-  fill: #f9fbff16;
-  stroke: #f7f3e6;
-  stroke-width: 3.3;
-  stroke-linejoin: round;
+.flute .glass{
+  fill:#f9fbff16;stroke:#f7f3e6;
+  stroke-width:3.3;stroke-linejoin:round;
 }
-
-.flute .drink { fill: #f8b932c7; }
-
-.flute .shine {
-  fill: none;
-  stroke: #ffffffc9;
-  stroke-width: 2.6;
-  stroke-linecap: round;
+.flute .drink{fill:#f8b932c7}
+.flute .shine{
+  fill:none;stroke:#ffffffc9;stroke-width:2.6;
+  stroke-linecap:round;
 }
-
-.flute .stem {
-  stroke: #f3eddf;
-  stroke-width: 4;
-  stroke-linecap: round;
+.flute .stem{
+  stroke:#f3eddf;stroke-width:4;stroke-linecap:round;
 }
-
-.flute .tiny { fill: #fff4bf; }
-
-.impact {
-  position: absolute;
-  left: 50%;
-  top: 47px;
-  width: 16px;
-  height: 16px;
-  transform: translateX(-50%) scale(0);
-  border-radius: 50%;
-  background: #fff9d5;
-  box-shadow:
-    0 0 14px 6px #fff8b7,
+.flute .tiny{fill:#fff4bf}
+.impact{
+  position:absolute;left:50%;top:47px;
+  width:16px;height:16px;
+  transform:translateX(-50%) scale(0);
+  border-radius:50%;background:#fff9d5;
+  box-shadow:0 0 14px 6px #fff8b7,
     0 0 35px 14px #ffbc3d;
-  opacity: 0;
-  z-index: 4;
+  opacity:0;z-index:4;
 }
-
-.impact::before,
-.impact::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 72px;
-  height: 3px;
-  background: linear-gradient(
-    90deg, transparent, #fff3b6, transparent
-  );
-  transform: translate(-50%,-50%);
+.impact::before,.impact::after{
+  content:"";position:absolute;left:50%;top:50%;
+  width:72px;height:3px;
+  background:linear-gradient(90deg,transparent,#fff3b6,transparent);
+  transform:translate(-50%,-50%);
 }
-
-.impact::after {
-  transform: translate(-50%,-50%) rotate(90deg);
+.impact::after{
+  transform:translate(-50%,-50%) rotate(90deg);
 }
-
-.particle {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  font-size: var(--s);
-  color: var(--c);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 5;
-  text-shadow: 0 0 9px currentColor;
+.particle{
+  position:absolute;left:var(--x);top:var(--y);
+  font-size:var(--s);color:var(--c);
+  opacity:0;pointer-events:none;z-index:5;
+  text-shadow:0 0 9px currentColor;
 }
-
-/* Both glasses meet at 32% of the timeline */
-.success.play .flute.left {
-  animation: clinkLeft 3.6s ease-in-out both;
+.success.play .flute.left{
+  animation:clinkLeft 3.6s ease-in-out both;
 }
-
-.success.play .flute.right {
-  animation: clinkRight 3.6s ease-in-out both;
+.success.play .flute.right{
+  animation:clinkRight 3.6s ease-in-out both;
 }
-
-.success.play .impact {
-  animation: clinkFlash 3.6s linear both;
+.success.play .impact{
+  animation:clinkFlash 3.6s linear both;
 }
-
-.success.play .particle {
-  animation: floatUp 3.6s ease-out both;
-  animation-delay: var(--delay);
+.success.play .particle{
+  animation:floatUp 3.6s ease-out both;
+  animation-delay:var(--delay);
 }
-
-.success.play h2 {
-  animation: signFlash 3.6s linear both;
+.success.play h2{
+  animation:signFlash 3.6s linear both;
 }
-
-@keyframes clinkLeft {
-  0% { transform: translateX(-29px) rotate(-18deg); }
-  23% { transform: translateX(-9px) rotate(-8deg); }
-  32% { transform: translateX(25px) rotate(9deg); }
-  38% { transform: translateX(18px) rotate(4deg); }
-  46%,100% { transform: translateX(21px) rotate(6deg); }
+@keyframes clinkLeft{
+  0%{transform:translateX(-29px) rotate(-18deg)}
+  23%{transform:translateX(-9px) rotate(-8deg)}
+  32%{transform:translateX(25px) rotate(9deg)}
+  38%{transform:translateX(18px) rotate(4deg)}
+  46%,100%{transform:translateX(21px) rotate(6deg)}
 }
-
-@keyframes clinkRight {
-  0% { transform: translateX(29px) rotate(18deg); }
-  23% { transform: translateX(9px) rotate(8deg); }
-  32% { transform: translateX(-25px) rotate(-9deg); }
-  38% { transform: translateX(-18px) rotate(-4deg); }
-  46%,100% { transform: translateX(-21px) rotate(-6deg); }
+@keyframes clinkRight{
+  0%{transform:translateX(29px) rotate(18deg)}
+  23%{transform:translateX(9px) rotate(8deg)}
+  32%{transform:translateX(-25px) rotate(-9deg)}
+  38%{transform:translateX(-18px) rotate(-4deg)}
+  46%,100%{transform:translateX(-21px) rotate(-6deg)}
 }
-
-@keyframes clinkFlash {
-  0%,30%,39%,100% {
-    opacity: 0;
-    transform: translateX(-50%) scale(0);
+@keyframes clinkFlash{
+  0%,30%,39%,100%{
+    opacity:0;transform:translateX(-50%) scale(0);
   }
-  32% {
-    opacity: 1;
-    transform: translateX(-50%) scale(1.6);
+  32%{
+    opacity:1;transform:translateX(-50%) scale(1.6);
   }
-  35% {
-    opacity: .8;
-    transform: translateX(-50%) scale(2.6);
+  35%{
+    opacity:.8;transform:translateX(-50%) scale(2.6);
   }
 }
-
-@keyframes floatUp {
-  0%,28% {
-    opacity: 0;
-    transform: translate(0,15px) scale(.35);
+@keyframes floatUp{
+  0%,28%{
+    opacity:0;transform:translate(0,15px) scale(.35);
   }
-  38% {
-    opacity: 1;
-    transform: translate(calc(var(--drift) * .2),-7px) scale(.85);
+  38%{
+    opacity:1;
+    transform:translate(calc(var(--drift) * .2),-7px) scale(.85);
   }
-  70% {
-    opacity: .85;
-    transform: translate(calc(var(--drift) * .7),-66px) scale(1.05);
+  70%{
+    opacity:.85;
+    transform:translate(calc(var(--drift) * .7),-66px) scale(1.05);
   }
-  100% {
-    opacity: 0;
-    transform: translate(var(--drift),-135px) scale(.7);
+  100%{
+    opacity:0;
+    transform:translate(var(--drift),-135px) scale(.7);
   }
 }
-
-/* Softer CHEERS flash */
-@keyframes signFlash {
-  0%,29% { filter: brightness(.85); }
-  32% {
-    filter: brightness(1.65)
+@keyframes signFlash{
+  0%,29%{filter:brightness(.85)}
+  32%{
+    filter:brightness(1.65)
       drop-shadow(0 0 10px #fff4a8);
   }
-  36% { filter: brightness(1.2); }
-  40% {
-    filter: brightness(1.35)
+  36%{filter:brightness(1.2)}
+  40%{
+    filter:brightness(1.35)
       drop-shadow(0 0 8px #ff42d2);
   }
-  47%,100% { filter: brightness(1.08); }
+  47%,100%{filter:brightness(1.08)}
 }
-
-/* Flash the main neon sign at the clink */
-.neon-marquee.clink-active h1 {
-  animation: headerClinkFlash 3.6s linear 1 both;
+.neon-marquee.clink-active h1{
+  animation:headerClinkFlash 3.6s linear 1 both;
 }
-
-@keyframes headerClinkFlash {
-  0%,29% {
-    filter: brightness(1);
+@keyframes headerClinkFlash{
+  0%,29%{filter:brightness(1)}
+  32%{
+    filter:brightness(1.55);
+    color:#fffefa;
+    text-shadow:0 0 5px #fff,0 0 12px #fff,
+      0 0 25px #fff1a0,0 0 42px #ffdd51;
   }
-  32% {
-    filter: brightness(1.55);
-    color: #fffefa;
-    text-shadow:
-      0 0 5px #fff,
-      0 0 12px #fff,
-      0 0 25px #fff1a0,
-      0 0 42px #ffdd51;
-  }
-  36% {
-    filter: brightness(1.15);
-  }
-  40% {
-    filter: brightness(1.3);
-  }
-  48%,100% {
-    filter: brightness(1);
-  }
+  36%{filter:brightness(1.15)}
+  40%{filter:brightness(1.3)}
+  48%,100%{filter:brightness(1)}
 }
-
-@media (max-width:370px) {
-  .neon-marquee {
-    grid-template-columns: 34px minmax(0,1fr) 34px;
-    gap: 2px;
-    min-height: 90px;
+@media(max-width:370px){
+  .neon-marquee{
+    grid-template-columns:54px minmax(0,1fr) 54px;
+    min-height:95px;
   }
-  .neon-marquee h1 {
-    font-size: clamp(36px,11.6vw,49px);
+  .neon-marquee h1{
+    font-size:clamp(34px,10.5vw,46px);
   }
-  .neon-symbol {
-    width: 33px;
-    height: 43px;
-  }
-  .grid { gap: 7px; }
-  .gift { min-height: 137px; }
-  .picture { height: 70px; }
-  .picture span { font-size: 43px; }
+  .neon-symbol{width:62px;height:78px}
+  .grid{gap:7px}
+  .gift{min-height:137px}
+  .picture{height:70px}
+  .picture span{font-size:43px}
 }
-
-@media (prefers-reduced-motion:reduce) {
-  .neon-symbol,
-  h1,
-  .success.play .flute,
-  .success.play .particle,
-  .success.play .impact,
-  .success.play h2,
-  .neon-marquee.clink-active h1 {
-    animation: none !important;
+@media(prefers-reduced-motion:reduce){
+  .neon-symbol,h1,
+  .success.play .flute,.success.play .particle,
+  .success.play .impact,.success.play h2,
+  .neon-marquee.clink-active h1{
+    animation:none!important;
   }
-  .flute.left {
-    transform: translateX(21px) rotate(6deg);
-  }
-  .flute.right {
-    transform: translateX(-21px) rotate(-6deg);
-  }
-  .particle { display: none; }
+  .flute.left{transform:translateX(21px) rotate(6deg)}
+  .flute.right{transform:translateX(-21px) rotate(-6deg)}
+  .particle{display:none}
 }
 </style>
 </head>
 
 <body>
 
-<!-- Repeating romantic line-art background -->
+<!-- Playful, hand-drawn repeating background -->
 <svg class="wallpaper" aria-hidden="true">
-  <defs>
-    <pattern id="cheersPattern"
-      width="216" height="224"
-      patternUnits="userSpaceOnUse">
+<defs>
+<pattern id="cheersPattern"
+  width="240" height="246"
+  patternUnits="userSpaceOnUse">
+<g fill="none" stroke="#ffd0e6"
+  stroke-width="3.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  opacity=".72">
 
-      <g fill="none"
-         stroke="#ffd6e7"
-         stroke-width="2.6"
-         stroke-linecap="round"
-         stroke-linejoin="round">
+  <!-- Dancing heart -->
+  <path d="M37 37 C20 16 3 34 16 51
+    C23 61 37 70 41 75
+    C48 63 72 48 64 32
+    C58 20 44 22 37 37Z"/>
+  <path d="M5 28 L0 20 M74 31 L84 24
+    M72 65 L81 72 M28 81 L24 90"/>
 
-        <!-- Love hearts -->
-        <path d="M24 35 C9 18 -3 36 24 57
-                 C51 36 39 18 24 35Z"/>
-        <path d="M158 155 C144 140 133 156 158 177
-                 C183 156 172 140 158 155Z"/>
+  <!-- Tilted cocktail -->
+  <g transform="rotate(13 170 54)">
+    <path d="M145 30 Q171 33 197 30
+      L171 72Z M171 72 L171 94
+      M154 95 Q171 91 188 95
+      M179 33 L190 16"/>
+    <path d="M149 40 Q171 44 193 40"/>
+  </g>
 
-        <!-- Champagne flute -->
-        <path d="M73 75 H109
-                 Q108 108 91 118
-                 Q74 108 73 75Z
-                 M91 118 V142
-                 M78 143 H104"/>
+  <!-- Dancing champagne flute -->
+  <g transform="rotate(-14 89 136)">
+    <path d="M70 109 Q90 105 111 109
+      C111 137 104 149 91 155
+      C79 149 70 133 70 109Z
+      M91 155 L91 178
+      M75 181 Q91 175 107 181"/>
+    <path d="M74 127 Q91 132 107 125"/>
+  </g>
 
-        <!-- Cocktail -->
-        <path d="M169 31 H204
-                 L186 65 Z
-                 M186 65 V87
-                 M172 88 H200
-                 M190 34 L205 17"/>
+  <!-- Another lively heart -->
+  <path d="M178 163 C164 148 146 161 156 177
+    C162 187 179 199 181 201
+    C188 190 209 181 206 165
+    C203 151 186 150 178 163Z"/>
+  <path d="M154 171 L143 165
+    M207 174 L219 169
+    M174 204 L168 216"/>
 
-        <!-- Sparkles -->
-        <path d="M130 28 V48 M120 38 H140
-                 M124 32 L136 44
-                 M136 32 L124 44"/>
-        <path d="M196 193 V209 M188 201 H204"/>
+  <!-- Movement marks -->
+  <path d="M118 31 L122 19
+    M130 37 L141 31
+    M117 47 L130 53
+    M17 160 L27 156
+    M22 173 L34 171
+    M214 115 L225 109
+    M212 128 L228 128"/>
 
-        <!-- Small drink -->
-        <path d="M28 176 H59
-                 L54 206 H33 Z
-                 M41 176 L48 160"/>
+  <!-- Bubbles -->
+  <circle cx="134" cy="107" r="5"/>
+  <circle cx="147" cy="96" r="3"/>
+  <circle cx="143" cy="117" r="2"/>
 
-        <!-- Extra hearts -->
-        <path d="M94 190 C88 183 80 190 94 202
-                 C108 190 100 183 94 190Z"/>
-      </g>
+  <path d="M32 218 Q42 205 52 218
+    Q62 231 72 218"/>
+</g>
 
-      <g fill="#ffd6e7"
-         font-family="Georgia,serif"
-         font-style="italic"
-         opacity=".8">
-        <text x="110" y="17" font-size="16"
-          transform="rotate(-10 110 17)">cheers</text>
-        <text x="9" y="130" font-size="16"
-          transform="rotate(-12 9 130)">cheers!</text>
-      </g>
+<g fill="#ffe3ee" opacity=".75"
+  font-family="Georgia,serif" font-style="italic">
+  <text x="6" y="115" font-size="19"
+    transform="rotate(-11 6 115)">cheers!</text>
+  <text x="134" y="233" font-size="18"
+    transform="rotate(9 134 233)">cheers</text>
+</g>
 
-      <g fill="#ffe1a9">
-        <circle cx="146" cy="105" r="2.5"/>
-        <circle cx="153" cy="96" r="2"/>
-        <circle cx="159" cy="87" r="1.5"/>
-        <circle cx="62" cy="20" r="2"/>
-      </g>
-
-    </pattern>
-  </defs>
-  <rect width="100%" height="100%"
-        fill="url(#cheersPattern)"/>
+<g fill="#ffe5b0" opacity=".65">
+  <circle cx="223" cy="207" r="3"/>
+  <circle cx="228" cy="198" r="2"/>
+  <circle cx="10" cy="194" r="2.5"/>
+</g>
+</pattern>
+</defs>
+<rect width="100%" height="100%"
+  fill="url(#cheersPattern)"/>
 </svg>
 
 <main>
-  <header>
-    <div class="neon-marquee">
+<header>
+<div class="neon-marquee">
 
-      <!-- Pink neon heart -->
-      <svg class="neon-symbol neon-heart"
-           viewBox="0 0 70 82" aria-hidden="true">
-        <path d="M35 66 C26 58 8 43 8 27
-                 C8 13 25 9 35 23
-                 C45 9 62 13 62 27
-                 C62 43 44 58 35 66Z"/>
-      </svg>
+  <svg class="neon-symbol neon-heart"
+    viewBox="0 0 70 82" aria-hidden="true">
+    <path d="M35 66 C26 58 8 43 8 27
+      C8 13 25 9 35 23
+      C45 9 62 13 62 27
+      C62 43 44 58 35 66Z"/>
+  </svg>
 
-      <h1>CHEERS!</h1>
+  <h1>CHEERS!</h1>
 
-      <!-- Blue neon cocktail -->
-      <svg class="neon-symbol neon-cocktail"
-           viewBox="0 0 75 82" aria-hidden="true">
-        <path d="M7 16 H67 L37 49 Z
-                 M37 49 V69
-                 M20 70 H54
-                 M43 18 L57 5
-                 M55 7 H68"/>
-        <circle cx="30" cy="24" r="3"/>
-      </svg>
+  <svg class="neon-symbol neon-cocktail"
+    viewBox="0 0 75 82" aria-hidden="true">
+    <path d="M7 16 H67 L37 49 Z
+      M37 49 V69 M20 70 H54
+      M43 18 L57 5 M55 7 H68
+      M22 29 H52"/>
+    <circle cx="30" cy="24" r="3"/>
+  </svg>
 
-    </div>
+</div>
+<div class="tagline">A little gift. A big smile.</div>
+</header>
 
-    <div class="tagline">
-      A little gift. A big smile.
-    </div>
-  </header>
+<div class="profile">
+  <div class="avatar" aria-hidden="true">👩</div>
+  <span>Send a little happiness to <b>Maly</b></span>
+</div>
 
-  <div class="profile">
-    <div class="avatar" aria-hidden="true">👩</div>
-    <span>
-      Send a little happiness to <b>Maly</b>
-    </span>
-  </div>
+<div class="grid" id="gifts"></div>
 
-  <div class="grid" id="gifts"></div>
-
-  <footer>
-    Cheers visual prototype · No real payments
-  </footer>
+<footer>
+  Cheers visual prototype · No real payments
+</footer>
 </main>
 
 <div class="overlay" id="overlay"
-     role="dialog"
-     aria-label="Gift preview"
-     aria-modal="true"
-     aria-hidden="true">
+  role="dialog" aria-label="Gift preview"
+  aria-modal="true" aria-hidden="true">
+<div class="sheet">
+<div class="handle"></div>
 
-  <div class="sheet">
-    <div class="handle"></div>
+<div id="payment">
+  <h2>Send a little happiness</h2>
+  <p>Your gift for Maly</p>
 
-    <div id="payment">
-      <h2>Send a little happiness</h2>
-      <p>Your gift for Maly</p>
-
-      <div class="summary">
-        <span id="selectedName"></span>
-        <strong id="selectedPrice"></strong>
-      </div>
-
-      <button class="action" id="previewButton">
-        Preview celebration
-      </button>
-
-      <button class="action secondary" id="cancelButton">
-        Back to gifts
-      </button>
-
-      <p class="note">
-        Demonstration only. No payment will be taken.
-      </p>
-    </div>
-
-    <div class="success" id="success">
-
-      <div class="celebration"
-           aria-label="Two champagne glasses clink">
-
-        <!-- Left champagne flute -->
-        <svg class="flute left"
-             viewBox="0 0 110 180" aria-hidden="true">
-          <path class="drink"
-                d="M29 51 Q29 88 55 105
-                   Q81 88 81 51Z"/>
-          <path class="glass"
-                d="M25 15 L85 15
-                   Q87 91 55 108
-                   Q23 91 25 15Z"/>
-          <path class="shine" d="M35 27 L35 61"/>
-          <path class="stem"
-                d="M55 108 V160
-                   M34 164 Q55 158 76 164"/>
-          <circle class="tiny" cx="44" cy="69" r="3"/>
-          <circle class="tiny" cx="61" cy="85" r="2.5"/>
-          <circle class="tiny" cx="65" cy="58" r="2"/>
-        </svg>
-
-        <!-- Right champagne flute -->
-        <svg class="flute right"
-             viewBox="0 0 110 180" aria-hidden="true">
-          <path class="drink"
-                d="M29 51 Q29 88 55 105
-                   Q81 88 81 51Z"/>
-          <path class="glass"
-                d="M25 15 L85 15
-                   Q87 91 55 108
-                   Q23 91 25 15Z"/>
-          <path class="shine" d="M35 27 L35 61"/>
-          <path class="stem"
-                d="M55 108 V160
-                   M34 164 Q55 158 76 164"/>
-          <circle class="tiny" cx="44" cy="69" r="3"/>
-          <circle class="tiny" cx="61" cy="85" r="2.5"/>
-          <circle class="tiny" cx="65" cy="58" r="2"/>
-        </svg>
-
-        <div class="impact" aria-hidden="true"></div>
-        <div id="particles" aria-hidden="true"></div>
-      </div>
-
-      <h2>CHEERS!</h2>
-      <p id="successMessage"></p>
-
-      <button class="action" id="backButton">
-        Back to gifts
-      </button>
-
-    </div>
+  <div class="summary">
+    <span id="selectedName"></span>
+    <strong id="selectedPrice"></strong>
   </div>
+
+  <button class="action" id="previewButton">
+    Preview celebration
+  </button>
+  <button class="action secondary" id="cancelButton">
+    Back to gifts
+  </button>
+  <p class="note">
+    Demonstration only. No payment will be taken.
+  </p>
+</div>
+
+<div class="success" id="success">
+<div class="celebration"
+  aria-label="Two champagne glasses clink">
+
+  <svg class="flute left" viewBox="0 0 110 180"
+    aria-hidden="true">
+    <path class="drink"
+      d="M29 51 Q29 88 55 105 Q81 88 81 51Z"/>
+    <path class="glass"
+      d="M25 15 L85 15 Q87 91 55 108
+        Q23 91 25 15Z"/>
+    <path class="shine" d="M35 27 L35 61"/>
+    <path class="stem"
+      d="M55 108 V160 M34 164 Q55 158 76 164"/>
+    <circle class="tiny" cx="44" cy="69" r="3"/>
+    <circle class="tiny" cx="61" cy="85" r="2.5"/>
+    <circle class="tiny" cx="65" cy="58" r="2"/>
+  </svg>
+
+  <svg class="flute right" viewBox="0 0 110 180"
+    aria-hidden="true">
+    <path class="drink"
+      d="M29 51 Q29 88 55 105 Q81 88 81 51Z"/>
+    <path class="glass"
+      d="M25 15 L85 15 Q87 91 55 108
+        Q23 91 25 15Z"/>
+    <path class="shine" d="M35 27 L35 61"/>
+    <path class="stem"
+      d="M55 108 V160 M34 164 Q55 158 76 164"/>
+    <circle class="tiny" cx="44" cy="69" r="3"/>
+    <circle class="tiny" cx="61" cy="85" r="2.5"/>
+    <circle class="tiny" cx="65" cy="58" r="2"/>
+  </svg>
+
+  <div class="impact" aria-hidden="true"></div>
+  <div id="particles" aria-hidden="true"></div>
+</div>
+
+<h2>CHEERS!</h2>
+<p id="successMessage"></p>
+
+<button class="action" id="backButton">
+  Back to gifts
+</button>
+</div>
+
+</div>
 </div>
 
 <script>
 const gifts = [
-  { name: "Coffee", price: 3.00, icon: "☕" },
-  { name: "Beer", price: 4.99, icon: "🍺" },
-  { name: "Cocktail", price: 5.99, icon: "🍸" },
-  { name: "Wine", price: 6.99, icon: "🍷" },
-  { name: "Shot", price: 4.99, icon: "🥃" },
-  { name: "Champagne", price: 9.99, icon: "🍾" },
-  { name: "Ring the Bell", price: 14.99, icon: "🔔" }
+  {name:"Coffee",price:3,icon:"☕"},
+  {name:"Beer",price:4.99,icon:"🍺"},
+  {name:"Cocktail",price:5.99,icon:"🍸"},
+  {name:"Wine",price:6.99,icon:"🍷"},
+  {name:"Shot",price:4.99,icon:"🥃"},
+  {name:"Champagne",price:9.99,icon:"🍾"},
+  {name:"Ring the Bell",price:14.99,icon:"🔔"}
 ];
 
 const marquee = document.querySelector(".neon-marquee");
@@ -892,7 +611,7 @@ const success = document.getElementById("success");
 
 let chosenGift = null;
 
-for (const gift of gifts) {
+for(const gift of gifts){
   const button = document.createElement("button");
   button.className = "gift";
   button.type = "button";
@@ -906,7 +625,7 @@ for (const gift of gifts) {
     gift.price.toFixed(2) +
     '</span>';
 
-  button.addEventListener("click", () => {
+  button.addEventListener("click",()=>{
     chosenGift = gift;
 
     document.getElementById("selectedName").textContent =
@@ -921,28 +640,28 @@ for (const gift of gifts) {
     marquee.classList.remove("clink-active");
 
     overlay.classList.add("open");
-    overlay.setAttribute("aria-hidden", "false");
+    overlay.setAttribute("aria-hidden","false");
   });
 
   grid.appendChild(button);
 }
 
-function closeOverlay() {
+function closeOverlay(){
   overlay.classList.remove("open");
-  overlay.setAttribute("aria-hidden", "true");
+  overlay.setAttribute("aria-hidden","true");
   success.classList.remove("play");
   marquee.classList.remove("clink-active");
 }
 
 document.getElementById("cancelButton")
-  .addEventListener("click", closeOverlay);
+  .addEventListener("click",closeOverlay);
 
 document.getElementById("backButton")
-  .addEventListener("click", closeOverlay);
+  .addEventListener("click",closeOverlay);
 
 document.getElementById("previewButton")
-  .addEventListener("click", () => {
-    if (!chosenGift) return;
+  .addEventListener("click",()=>{
+    if(!chosenGift) return;
 
     document.getElementById("successMessage").textContent =
       "A " + chosenGift.name.toLowerCase() +
@@ -951,7 +670,6 @@ document.getElementById("previewButton")
     payment.style.display = "none";
     success.style.display = "block";
 
-    // Restart the animation on each preview
     success.classList.remove("play");
     void success.offsetWidth;
     success.classList.add("play");
@@ -962,21 +680,20 @@ document.getElementById("previewButton")
   });
 
 marquee.querySelector("h1")
-  .addEventListener("animationend", event => {
-    if (event.animationName === "headerClinkFlash") {
+  .addEventListener("animationend",event=>{
+    if(event.animationName === "headerClinkFlash"){
       marquee.classList.remove("clink-active");
     }
   });
 
-overlay.addEventListener("click", event => {
-  if (event.target === overlay) closeOverlay();
+overlay.addEventListener("click",event=>{
+  if(event.target === overlay) closeOverlay();
 });
 
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") closeOverlay();
+document.addEventListener("keydown",event=>{
+  if(event.key === "Escape") closeOverlay();
 });
 
-// Floating hearts, bubbles and sparkles
 const particles = document.getElementById("particles");
 
 const symbols = [
@@ -986,34 +703,33 @@ const symbols = [
   "♡","◦","✧","○","♥"
 ];
 
-for (let i = 0; i < symbols.length; i++) {
+for(let i=0;i<symbols.length;i++){
   const el = document.createElement("span");
   el.className = "particle";
   el.textContent = symbols[i];
 
-  const x = 23 + (i * 37) % 54;
-  const y = 36 + (i * 19) % 45;
+  const x = 23 + (i*37)%54;
+  const y = 36 + (i*19)%45;
 
-  el.style.setProperty("--x", x + "%");
-  el.style.setProperty("--y", y + "%");
-  el.style.setProperty("--s", (13 + i % 4 * 4) + "px");
+  el.style.setProperty("--x",x+"%");
+  el.style.setProperty("--y",y+"%");
+  el.style.setProperty("--s",(13+i%4*4)+"px");
 
   el.style.setProperty(
     "--c",
-    i % 4 === 0 ? "#ff83ca" :
-    i % 3 === 0 ? "#fff5c0" : "#ffd56c"
+    i%4===0 ? "#ff83ca" :
+    i%3===0 ? "#fff5c0" : "#ffd56c"
   );
 
   el.style.setProperty(
     "--drift",
-    ((i % 2 ? 1 : -1) * (20 + (i * 17) % 58)) + "px"
+    ((i%2 ? 1 : -1)*(20+(i*17)%58))+"px"
   );
 
-  el.style.setProperty("--delay", (i % 5) * .08 + "s");
+  el.style.setProperty("--delay",(i%5)*.08+"s");
 
   particles.appendChild(el);
 }
 </script>
-
 </body>
 </html>
