@@ -2,417 +2,779 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090d18">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#422442">
 <title>Cheers!</title>
-<style> 
-  /* CHEERS — NEON COCKTAIL BAR MAKEOVER */
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
 
 body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
   background:
-    radial-gradient(circle at 15% 13%, #ff37a044, transparent 26%),
-    radial-gradient(circle at 86% 18%, #007dff55, transparent 30%),
-    radial-gradient(circle at 50% 80%, #8a3d2044, transparent 55%),
-    linear-gradient(180deg, #14051f 0%, #050817 50%, #130b1a 100%);
+    radial-gradient(ellipse at 15% 4%, #ef86ba55, transparent 45%),
+    radial-gradient(ellipse at 92% 27%, #ab7de355, transparent 48%),
+    linear-gradient(160deg, #422442, #694369 46%, #352143);
   background-attachment: fixed;
 }
 
-header {
+/* Romantic, hand-drawn repeating wallpaper */
+.wallpaper {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .33;
+}
+
+main {
   position: relative;
-  padding: 15px 5px 20px;
+  z-index: 1;
+  max-width: 500px;
+  margin: auto;
+  padding: 25px 15px 55px;
+}
+
+header {
+  text-align: center;
+  padding: 8px 0 16px;
+}
+
+.neon-marquee {
+  display: grid;
+  grid-template-columns: 43px minmax(0,1fr) 43px;
+  align-items: center;
+  justify-items: center;
+  gap: 3px;
+  width: 100%;
+  min-height: 100px;
 }
 
 h1 {
-  font-family: Georgia, serif;
-  font-weight: 900;
-  font-size: clamp(48px, 13vw, 76px);
-  letter-spacing: -2px;
-  color: #fff0b0;
-  -webkit-text-stroke: 1px #ff9e2b;
-  text-shadow:
-    0 0 3px #fff,
-    0 0 8px #ffb000,
-    0 0 18px #ff7800,
-    0 0 32px #ff29b8,
-    0 0 55px #ff00bf;
-  animation: neonSign 4s ease-in-out infinite;
+  font-family: "Pacifico", "Brush Script MT", cursive;
+  font-size: clamp(40px, 12vw, 72px);
+  font-weight: 400;
+  line-height: 1.5;
+  white-space: nowrap;
+  margin: 0;
+  color: #fff1fb;
+  transform: rotate(-3deg);
+  -webkit-text-stroke: .65px #ff8acb;
+  animation: neonColours 6s ease-in-out infinite;
+}
+
+@keyframes neonColours {
+  0%, 100% {
+    color: #fff1fb;
+    text-shadow:
+      0 0 3px white,
+      0 0 9px #ff94d9,
+      0 0 22px #ff2fa7,
+      0 0 45px #d72bd6;
+  }
+  25% {
+    color: #e7fcff;
+    text-shadow:
+      0 0 3px white,
+      0 0 10px #80ecff,
+      0 0 23px #00c9ff,
+      0 0 45px #4b69ff;
+  }
+  50% {
+    color: #fff4cd;
+    text-shadow:
+      0 0 3px white,
+      0 0 10px #ffe0a0,
+      0 0 23px #ffb72e,
+      0 0 45px #ff6d6d;
+  }
+  75% {
+    color: #fff1fb;
+    text-shadow:
+      0 0 3px white,
+      0 0 10px #ff94d9,
+      0 0 23px #ff2fa7,
+      0 0 45px #d72bd6;
+  }
+}
+
+.neon-symbol {
+  width: 42px;
+  height: 52px;
+  fill: none;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: symbolGlow 5s ease-in-out infinite;
+}
+
+.neon-heart {
+  stroke: #ffd9f0;
+  color: #ff67ba;
+}
+
+.neon-cocktail {
+  stroke: #d9faff;
+  color: #33dcff;
+  animation-delay: -2s;
+}
+
+.neon-cocktail circle {
+  fill: #ff82d4;
+  stroke: #fff0f9;
+  stroke-width: 1.5;
+}
+
+@keyframes symbolGlow {
+  0%, 100% {
+    opacity: 1;
+    filter:
+      drop-shadow(0 0 4px currentColor)
+      drop-shadow(0 0 12px currentColor);
+  }
+  50% {
+    opacity: .85;
+    filter:
+      drop-shadow(0 0 8px currentColor)
+      drop-shadow(0 0 20px currentColor);
+  }
+}
+
+.tagline {
+  color: #f0cce3;
+  font-size: 14px;
+  margin-top: 5px;
 }
 
 header::after {
   content: "";
   display: block;
+  height: 4px;
   width: 82%;
-  height: 5px;
-  margin: 9px auto 0;
-  border-radius: 50%;
-  background: linear-gradient(90deg,
-    transparent, #ff30d6, #00dfff, #ff30d6, transparent);
-  box-shadow:
-    0 0 10px #ff20d6,
-    0 0 24px #008cff;
+  margin: 20px auto 0;
+  border-radius: 20px;
+  background: linear-gradient(
+    90deg, transparent, #f23abb, #04dafa,
+    #f23abb, transparent
+  );
+  box-shadow: 0 0 15px #f23abb;
 }
 
 .profile {
-  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 24px 0;
+  font-size: 14px;
+  color: #eee1ec;
 }
 
 .avatar {
-  border: 3px solid #ffd16d;
-  box-shadow:
-    0 0 12px #ffcc55,
-    0 0 26px #ff40bb77;
+  width: 47px;
+  height: 47px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+  background: #39204b;
+  border: 2px solid #ffd27a;
+  box-shadow: 0 0 16px #ffbc65aa;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px;
+}
+
+/* Ring the Bell sits in the bottom centre */
+.grid > .gift:last-child:nth-child(3n + 1) {
+  grid-column: 2;
 }
 
 .gift {
-  border: 2px solid #e9a94b;
-  background:
-    radial-gradient(circle at 50% 15%, #3c285b, transparent 75%),
-    linear-gradient(155deg, #101529, #060b19);
+  position: relative;
+  min-width: 0;
+  min-height: 150px;
+  padding: 9px 4px 12px;
+  border: 2px solid #b67c4c;
+  border-radius: 19px;
+  background: linear-gradient(
+    145deg, #633b68f2, #2d1b41f2 75%
+  );
+  color: white;
+  cursor: pointer;
   box-shadow:
-    inset 0 1px 0 #fff5bc55,
-    0 0 9px #ffa53d55,
-    0 8px 22px #000a;
+    inset 0 1px 0 #fff4c344,
+    0 0 12px #a56d3d44;
+  transition: transform .2s, border-color .2s;
 }
 
 .gift:hover,
 .gift:focus-visible {
-  transform: translateY(-4px);
+  outline: 0;
+  transform: translateY(-3px);
   border-width: 3px;
-  border-color: #ffe38a;
-  box-shadow:
-    0 0 6px #fff6d0,
-    0 0 15px #ffc342,
-    0 0 28px #ff9b00,
-    0 0 45px #ffb70088,
-    inset 0 0 12px #ffd26944;
-  animation: glitterGold 1.8s ease-in-out infinite;
+  border-color: #ffe9a4;
+  animation: giftGlow 1.8s ease-in-out infinite;
 }
 
 .gift:active {
   transform: scale(.97);
 }
 
-.art {
-  background:
-    radial-gradient(circle at 50% 65%, var(--glow), transparent 70%),
-    linear-gradient(160deg, #ffffff13, #020716);
-}
-
-.art svg {
-  filter:
-    drop-shadow(0 0 6px var(--glow))
-    drop-shadow(0 5px 5px #000b);
-}
-
-.price {
-  color: #ffe2a1;
-  text-shadow: 0 0 8px #ffad4277;
-}
-
-.sheet {
-  border: 2px solid #ffc76a;
-  background: linear-gradient(160deg, #29113b, #090d20);
-  box-shadow: 0 -10px 45px #ff3caf55;
-}
-
-@keyframes neonSign {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.22); }
-}
-
-@keyframes glitterGold {
+@keyframes giftGlow {
   0%, 100% {
     box-shadow:
-      0 0 8px #fff4b9,
-      0 0 18px #ffb700,
-      0 0 30px #ff9b0066;
+      0 0 8px #ffe8aa,
+      0 0 22px #ffc145,
+      0 0 36px #ff9a0044;
   }
   50% {
     box-shadow:
-      0 0 12px #ffffff,
-      0 0 25px #ffd45c,
-      0 0 42px #ffab00,
-      0 0 55px #ff900099;
+      0 0 14px #fff5c8,
+      0 0 29px #ffbc4a,
+      0 0 44px #ffa50088;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  h1, .gift:hover, .gift:focus-visible {
-    animation: none;
-  }
-}  <style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-  color: white;
-  background: radial-gradient(ellipse at top,
-    #29364c 0%, #151b2b 45%, #090d18 90%);
-}
-main {
-  max-width: 500px;
-  margin: auto;
-  padding: 30px 16px 60px;
-}
-header { text-align: center; }
-h1 {
-  font-size: 52px;
-  margin: 5px 0;
-  letter-spacing: 2px;
-  color: #ffcc85;
-  text-shadow: 0 0 25px #e58b4a88;
-}
-.tagline {
-  color: #d7c7bd;
-  font-size: 14px;
-}
-.profile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin: 28px 0;
-  font-size: 15px;
-}
-.avatar {
-  width: 46px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  font-size: 24px;
-  border-radius: 50%;
-  background: #79527e;
-  border: 2px solid #ffd095;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 11px;
-}
-.gift {
-  min-width: 0;
-  min-height: 155px;
-  padding: 11px 5px;
-  border: 1px solid #ab8d9b;
-  border-radius: 20px;
-  background: linear-gradient(150deg, #453c63, #222c47);
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 8px 20px #0005,
-    inset 0 1px 0 #ffffff33;
-  transition: transform .15s, border-color .15s;
-}
-.gift:hover {
-  transform: translateY(-3px);
-  border-color: #ffd39a;
-}
-.gift:active { transform: scale(.96); }
 .picture {
-  height: 83px;
-  margin-bottom: 10px;
-  border-radius: 15px;
+  height: 82px;
   display: grid;
   place-items: center;
-  background: radial-gradient(ellipse at top left,
-    #a28bb777, #292842);
+  margin-bottom: 9px;
+  border-radius: 13px;
+  background: radial-gradient(
+    ellipse at 50% 65%, #a24b8655, transparent 72%
+  );
 }
+
 .picture span {
   font-size: 51px;
-  filter: drop-shadow(0 6px 5px #0008);
+  filter: drop-shadow(0 0 9px #efb45277);
 }
+
 .name {
   display: block;
-  font-size: 13px;
-  font-weight: bold;
+  font-size: 12px;
+  font-weight: 800;
 }
+
 .price {
   display: block;
-  margin-top: 6px;
-  color: #ffd18e;
+  margin-top: 5px;
   font-size: 14px;
-  font-weight: bold;
+  color: #ffd58e;
+  font-weight: 800;
 }
+
 footer {
   text-align: center;
-  color: #a5a8ba;
+  color: #c9b4cb;
   font-size: 11px;
-  margin-top: 28px;
+  margin-top: 25px;
 }
+
+/* Sliding gift preview */
 .overlay {
   position: fixed;
   inset: 0;
-  background: #030610bd;
+  z-index: 20;
+  background: #030512bc;
   display: none;
   align-items: flex-end;
   justify-content: center;
-  z-index: 10;
 }
+
 .overlay.open { display: flex; }
+
 .sheet {
   width: 100%;
   max-width: 500px;
-  padding: 20px 24px 32px;
+  max-height: 94dvh;
+  overflow-y: auto;
+  padding: 17px 23px calc(24px + env(safe-area-inset-bottom));
+  border: 1px solid #d8a36e;
+  border-bottom: 0;
   border-radius: 28px 28px 0 0;
-  border: 1px solid #997e91;
-  background: linear-gradient(145deg, #28344c, #151b30);
-  box-shadow: 0 -15px 50px #000a;
-  animation: slideUp .25s ease-out;
+  background: linear-gradient(
+    155deg, #593458, #362342 68%, #241b34
+  );
+  box-shadow: 0 -14px 48px #000a;
+  animation: sheetRise .28s ease-out;
 }
+
+@keyframes sheetRise {
+  from {
+    transform: translateY(40px);
+    opacity: .5;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .handle {
   width: 48px;
   height: 5px;
-  margin: 0 auto 20px;
-  border-radius: 8px;
-  background: #85899a;
+  margin: 0 auto 18px;
+  background: #8990a3;
+  border-radius: 10px;
 }
-.sheet h2 { margin: 0 0 10px; }
+
+.sheet h2 { margin: 0 0 9px; }
+
 .sheet p {
-  color: #c7cbd8;
+  color: #e3d5e7;
   font-size: 14px;
+  line-height: 1.5;
 }
+
 .summary {
   display: flex;
   justify-content: space-between;
-  padding: 18px 0;
-  border-bottom: 1px solid #ffffff33;
+  padding: 17px 0;
+  border-bottom: 1px solid #ffffff30;
 }
+
 .summary strong { color: #ffd18e; }
+
 .action {
   display: block;
   width: 100%;
-  padding: 16px;
-  margin-top: 17px;
-  border: none;
+  border: 0;
   border-radius: 14px;
+  padding: 16px;
+  margin-top: 16px;
   background: #ffd18e;
-  color: #1c2230;
+  color: #1b2333;
+  font-weight: 800;
   font-size: 16px;
-  font-weight: bold;
   cursor: pointer;
 }
+
 .secondary {
   background: transparent;
-  border: 1px solid #65718a;
   color: white;
+  border: 1px solid #a68aa8;
   margin-top: 10px;
 }
+
 .note {
   text-align: center;
   font-size: 12px !important;
 }
+
+/* Champagne celebration */
 .success {
   display: none;
   text-align: center;
-  padding: 20px 0;
+  padding: 0 0 6px;
 }
-.success .glasses {
-  font-size: 75px;
-  animation: celebrate .6s ease-out;
-}
+
 .success h2 {
-  font-size: 34px;
-  color: #ffd18e;
-  margin: 10px 0;
+  font: 900 clamp(36px,10vw,51px) Georgia,serif;
+  letter-spacing: 2px;
+  margin: 0;
+  color: #fff3b1;
+  -webkit-text-stroke: .6px #ffc365;
+  text-shadow:
+    0 0 8px #ffb63c,
+    0 0 22px #ff9b2e,
+    0 0 35px #ec30b8;
 }
-@keyframes slideUp {
-  from { transform: translateY(45px); opacity: .4; }
-  to { transform: translateY(0); opacity: 1; }
+
+.success p { margin: 14px 0 18px; }
+
+.celebration {
+  position: relative;
+  height: 207px;
+  max-width: 340px;
+  margin: 0 auto;
+  isolation: isolate;
+  overflow: hidden;
 }
-@keyframes celebrate {
-  0% { transform: scale(.3) rotate(-25deg); }
-  70% { transform: scale(1.2) rotate(10deg); }
-  100% { transform: scale(1); }
+
+.celebration::before {
+  content: "";
+  position: absolute;
+  inset: 36px 28px 3px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse, #ffbf3855, transparent 66%
+  );
+  filter: blur(12px);
+  opacity: .6;
 }
-@media (max-width: 370px) {
-  main { padding-left: 10px; padding-right: 10px; }
+
+.flute {
+  position: absolute;
+  top: 27px;
+  width: 102px;
+  height: 159px;
+  overflow: visible;
+  filter: drop-shadow(0 0 8px #ffc65a88);
+}
+
+.flute.left {
+  left: calc(50% - 106px);
+  transform-origin: 50% 92%;
+}
+
+.flute.right {
+  right: calc(50% - 106px);
+  transform-origin: 50% 92%;
+}
+
+.flute .glass {
+  fill: #f9fbff16;
+  stroke: #f7f3e6;
+  stroke-width: 3.3;
+  stroke-linejoin: round;
+}
+
+.flute .drink { fill: #f8b932c7; }
+
+.flute .shine {
+  fill: none;
+  stroke: #ffffffc9;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+
+.flute .stem {
+  stroke: #f3eddf;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.flute .tiny { fill: #fff4bf; }
+
+.impact {
+  position: absolute;
+  left: 50%;
+  top: 47px;
+  width: 16px;
+  height: 16px;
+  transform: translateX(-50%) scale(0);
+  border-radius: 50%;
+  background: #fff9d5;
+  box-shadow:
+    0 0 14px 6px #fff8b7,
+    0 0 35px 14px #ffbc3d;
+  opacity: 0;
+  z-index: 4;
+}
+
+.impact::before,
+.impact::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 72px;
+  height: 3px;
+  background: linear-gradient(
+    90deg, transparent, #fff3b6, transparent
+  );
+  transform: translate(-50%,-50%);
+}
+
+.impact::after {
+  transform: translate(-50%,-50%) rotate(90deg);
+}
+
+.particle {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  font-size: var(--s);
+  color: var(--c);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+  text-shadow: 0 0 9px currentColor;
+}
+
+/* Both glasses meet at 32% of the timeline */
+.success.play .flute.left {
+  animation: clinkLeft 3.6s ease-in-out both;
+}
+
+.success.play .flute.right {
+  animation: clinkRight 3.6s ease-in-out both;
+}
+
+.success.play .impact {
+  animation: clinkFlash 3.6s linear both;
+}
+
+.success.play .particle {
+  animation: floatUp 3.6s ease-out both;
+  animation-delay: var(--delay);
+}
+
+.success.play h2 {
+  animation: signFlash 3.6s linear both;
+}
+
+@keyframes clinkLeft {
+  0% { transform: translateX(-29px) rotate(-18deg); }
+  23% { transform: translateX(-9px) rotate(-8deg); }
+  32% { transform: translateX(25px) rotate(9deg); }
+  38% { transform: translateX(18px) rotate(4deg); }
+  46%,100% { transform: translateX(21px) rotate(6deg); }
+}
+
+@keyframes clinkRight {
+  0% { transform: translateX(29px) rotate(18deg); }
+  23% { transform: translateX(9px) rotate(8deg); }
+  32% { transform: translateX(-25px) rotate(-9deg); }
+  38% { transform: translateX(-18px) rotate(-4deg); }
+  46%,100% { transform: translateX(-21px) rotate(-6deg); }
+}
+
+@keyframes clinkFlash {
+  0%,30%,39%,100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0);
+  }
+  32% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.6);
+  }
+  35% {
+    opacity: .8;
+    transform: translateX(-50%) scale(2.6);
+  }
+}
+
+@keyframes floatUp {
+  0%,28% {
+    opacity: 0;
+    transform: translate(0,15px) scale(.35);
+  }
+  38% {
+    opacity: 1;
+    transform: translate(calc(var(--drift) * .2),-7px) scale(.85);
+  }
+  70% {
+    opacity: .85;
+    transform: translate(calc(var(--drift) * .7),-66px) scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--drift),-135px) scale(.7);
+  }
+}
+
+/* Softer CHEERS flash */
+@keyframes signFlash {
+  0%,29% { filter: brightness(.85); }
+  32% {
+    filter: brightness(1.65)
+      drop-shadow(0 0 10px #fff4a8);
+  }
+  36% { filter: brightness(1.2); }
+  40% {
+    filter: brightness(1.35)
+      drop-shadow(0 0 8px #ff42d2);
+  }
+  47%,100% { filter: brightness(1.08); }
+}
+
+/* Flash the main neon sign at the clink */
+.neon-marquee.clink-active h1 {
+  animation: headerClinkFlash 3.6s linear 1 both;
+}
+
+@keyframes headerClinkFlash {
+  0%,29% {
+    filter: brightness(1);
+  }
+  32% {
+    filter: brightness(1.55);
+    color: #fffefa;
+    text-shadow:
+      0 0 5px #fff,
+      0 0 12px #fff,
+      0 0 25px #fff1a0,
+      0 0 42px #ffdd51;
+  }
+  36% {
+    filter: brightness(1.15);
+  }
+  40% {
+    filter: brightness(1.3);
+  }
+  48%,100% {
+    filter: brightness(1);
+  }
+}
+
+@media (max-width:370px) {
+  .neon-marquee {
+    grid-template-columns: 34px minmax(0,1fr) 34px;
+    gap: 2px;
+    min-height: 90px;
+  }
+  .neon-marquee h1 {
+    font-size: clamp(36px,11.6vw,49px);
+  }
+  .neon-symbol {
+    width: 33px;
+    height: 43px;
+  }
   .grid { gap: 7px; }
-  .gift { min-height: 140px; }
+  .gift { min-height: 137px; }
   .picture { height: 70px; }
   .picture span { font-size: 43px; }
 }
 
-<
-/* Animated champagne celebration */
-
-.clinking-glasses {
-  position: relative;
-  height: 125px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: visible;
-}
-
-.glass-left {
-  display: inline-block;
-  font-size: 78px;
-  transform-origin: center bottom;
-  animation: champagneClink 2.5s ease-in-out infinite;
-  filter: drop-shadow(0 0 15px #ffce64);
-}
-
-.bubbles {
-  position: absolute;
-  top: 5px;
-  left: 50%;
-  font-size: 24px;
-  white-space: nowrap;
-  pointer-events: none;
-  animation: champagneBubbles 2.5s ease-out infinite;
-}
-
-@keyframes champagneClink {
-  0%, 100% {
-    transform: scale(.85) rotate(-12deg);
+@media (prefers-reduced-motion:reduce) {
+  .neon-symbol,
+  h1,
+  .success.play .flute,
+  .success.play .particle,
+  .success.play .impact,
+  .success.play h2,
+  .neon-marquee.clink-active h1 {
+    animation: none !important;
   }
-  35% {
-    transform: scale(1.15) rotate(10deg);
+  .flute.left {
+    transform: translateX(21px) rotate(6deg);
   }
-  48% {
-    transform: scale(1.25) rotate(-5deg);
+  .flute.right {
+    transform: translateX(-21px) rotate(-6deg);
   }
-  70% {
-    transform: scale(1.05) rotate(0deg);
-  }
-}
-
-@keyframes champagneBubbles {
-  0%, 30% {
-    opacity: 0;
-    transform: translate(-50%, 25px) scale(.3);
-  }
-  45% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -90px) scale(1.5);
-  }
-}
-
-.success h2 {
-  text-shadow:
-    0 0 8px #ffd76b,
-    0 0 20px #ffac35,
-    0 0 35px #ff37ba;
- animation: cheersGlow 2.5s ease-in-out infinite;
-}
-
-@keyframes cheersGlow {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.5); }
+  .particle { display: none; }
 }
 </style>
+</head>
+
 <body>
+
+<!-- Repeating romantic line-art background -->
+<svg class="wallpaper" aria-hidden="true">
+  <defs>
+    <pattern id="cheersPattern"
+      width="216" height="224"
+      patternUnits="userSpaceOnUse">
+
+      <g fill="none"
+         stroke="#ffd6e7"
+         stroke-width="2.6"
+         stroke-linecap="round"
+         stroke-linejoin="round">
+
+        <!-- Love hearts -->
+        <path d="M24 35 C9 18 -3 36 24 57
+                 C51 36 39 18 24 35Z"/>
+        <path d="M158 155 C144 140 133 156 158 177
+                 C183 156 172 140 158 155Z"/>
+
+        <!-- Champagne flute -->
+        <path d="M73 75 H109
+                 Q108 108 91 118
+                 Q74 108 73 75Z
+                 M91 118 V142
+                 M78 143 H104"/>
+
+        <!-- Cocktail -->
+        <path d="M169 31 H204
+                 L186 65 Z
+                 M186 65 V87
+                 M172 88 H200
+                 M190 34 L205 17"/>
+
+        <!-- Sparkles -->
+        <path d="M130 28 V48 M120 38 H140
+                 M124 32 L136 44
+                 M136 32 L124 44"/>
+        <path d="M196 193 V209 M188 201 H204"/>
+
+        <!-- Small drink -->
+        <path d="M28 176 H59
+                 L54 206 H33 Z
+                 M41 176 L48 160"/>
+
+        <!-- Extra hearts -->
+        <path d="M94 190 C88 183 80 190 94 202
+                 C108 190 100 183 94 190Z"/>
+      </g>
+
+      <g fill="#ffd6e7"
+         font-family="Georgia,serif"
+         font-style="italic"
+         opacity=".8">
+        <text x="110" y="17" font-size="16"
+          transform="rotate(-10 110 17)">cheers</text>
+        <text x="9" y="130" font-size="16"
+          transform="rotate(-12 9 130)">cheers!</text>
+      </g>
+
+      <g fill="#ffe1a9">
+        <circle cx="146" cy="105" r="2.5"/>
+        <circle cx="153" cy="96" r="2"/>
+        <circle cx="159" cy="87" r="1.5"/>
+        <circle cx="62" cy="20" r="2"/>
+      </g>
+
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%"
+        fill="url(#cheersPattern)"/>
+</svg>
+
 <main>
-  <header>  <header>
-    <h1>CHEERS!</h1>    <div class="tagline">A little gift. A big smile.</div>
+  <header>
+    <div class="neon-marquee">
+
+      <!-- Pink neon heart -->
+      <svg class="neon-symbol neon-heart"
+           viewBox="0 0 70 82" aria-hidden="true">
+        <path d="M35 66 C26 58 8 43 8 27
+                 C8 13 25 9 35 23
+                 C45 9 62 13 62 27
+                 C62 43 44 58 35 66Z"/>
+      </svg>
+
+      <h1>CHEERS!</h1>
+
+      <!-- Blue neon cocktail -->
+      <svg class="neon-symbol neon-cocktail"
+           viewBox="0 0 75 82" aria-hidden="true">
+        <path d="M7 16 H67 L37 49 Z
+                 M37 49 V69
+                 M20 70 H54
+                 M43 18 L57 5
+                 M55 7 H68"/>
+        <circle cx="30" cy="24" r="3"/>
+      </svg>
+
+    </div>
+
+    <div class="tagline">
+      A little gift. A big smile.
+    </div>
   </header>
 
   <div class="profile">
-    <div class="avatar">👩</div>
-    <span>Send a little happiness to <b>Maly</b></span>
+    <div class="avatar" aria-hidden="true">👩</div>
+    <span>
+      Send a little happiness to <b>Maly</b>
+    </span>
   </div>
 
   <div class="grid" id="gifts"></div>
@@ -422,7 +784,12 @@ footer {
   </footer>
 </main>
 
-<div class="overlay" id="overlay">
+<div class="overlay" id="overlay"
+     role="dialog"
+     aria-label="Gift preview"
+     aria-modal="true"
+     aria-hidden="true">
+
   <div class="sheet">
     <div class="handle"></div>
 
@@ -448,17 +815,62 @@ footer {
       </p>
     </div>
 
-  <div class="success" id="success">
-  <div class="clinking-glasses">
-    <span class="glass-left">🥂</span>
-    <span class="bubbles">✨ 🫧 ✨</span>
+    <div class="success" id="success">
+
+      <div class="celebration"
+           aria-label="Two champagne glasses clink">
+
+        <!-- Left champagne flute -->
+        <svg class="flute left"
+             viewBox="0 0 110 180" aria-hidden="true">
+          <path class="drink"
+                d="M29 51 Q29 88 55 105
+                   Q81 88 81 51Z"/>
+          <path class="glass"
+                d="M25 15 L85 15
+                   Q87 91 55 108
+                   Q23 91 25 15Z"/>
+          <path class="shine" d="M35 27 L35 61"/>
+          <path class="stem"
+                d="M55 108 V160
+                   M34 164 Q55 158 76 164"/>
+          <circle class="tiny" cx="44" cy="69" r="3"/>
+          <circle class="tiny" cx="61" cy="85" r="2.5"/>
+          <circle class="tiny" cx="65" cy="58" r="2"/>
+        </svg>
+
+        <!-- Right champagne flute -->
+        <svg class="flute right"
+             viewBox="0 0 110 180" aria-hidden="true">
+          <path class="drink"
+                d="M29 51 Q29 88 55 105
+                   Q81 88 81 51Z"/>
+          <path class="glass"
+                d="M25 15 L85 15
+                   Q87 91 55 108
+                   Q23 91 25 15Z"/>
+          <path class="shine" d="M35 27 L35 61"/>
+          <path class="stem"
+                d="M55 108 V160
+                   M34 164 Q55 158 76 164"/>
+          <circle class="tiny" cx="44" cy="69" r="3"/>
+          <circle class="tiny" cx="61" cy="85" r="2.5"/>
+          <circle class="tiny" cx="65" cy="58" r="2"/>
+        </svg>
+
+        <div class="impact" aria-hidden="true"></div>
+        <div id="particles" aria-hidden="true"></div>
+      </div>
+
+      <h2>CHEERS!</h2>
+      <p id="successMessage"></p>
+
+      <button class="action" id="backButton">
+        Back to gifts
+      </button>
+
+    </div>
   </div>
-  <h2>CHEERS!</h2>
-  <p id="successMessage"></p>
-  <button class="action" id="backButton">
-    Back to gifts
-  </button>
-</div>  </div>
 </div>
 
 <script>
@@ -472,6 +884,7 @@ const gifts = [
   { name: "Ring the Bell", price: 14.99, icon: "🔔" }
 ];
 
+const marquee = document.querySelector(".neon-marquee");
 const grid = document.getElementById("gifts");
 const overlay = document.getElementById("overlay");
 const payment = document.getElementById("payment");
@@ -479,18 +892,19 @@ const success = document.getElementById("success");
 
 let chosenGift = null;
 
-gifts.forEach(gift => {
+for (const gift of gifts) {
   const button = document.createElement("button");
   button.className = "gift";
   button.type = "button";
 
-  button.innerHTML = `
-    <div class="picture">
-      <span>${gift.icon}</span>
-    </div>
-    <span class="name">${gift.name}</span>
-    <span class="price">$${gift.price.toFixed(2)}</span>
-  `;
+  button.innerHTML =
+    '<div class="picture"><span aria-hidden="true">' +
+    gift.icon +
+    '</span></div><span class="name">' +
+    gift.name +
+    '</span><span class="price">$' +
+    gift.price.toFixed(2) +
+    '</span>';
 
   button.addEventListener("click", () => {
     chosenGift = gift;
@@ -503,14 +917,21 @@ gifts.forEach(gift => {
 
     payment.style.display = "block";
     success.style.display = "none";
+    success.classList.remove("play");
+    marquee.classList.remove("clink-active");
+
     overlay.classList.add("open");
+    overlay.setAttribute("aria-hidden", "false");
   });
 
   grid.appendChild(button);
-});
+}
 
 function closeOverlay() {
   overlay.classList.remove("open");
+  overlay.setAttribute("aria-hidden", "true");
+  success.classList.remove("play");
+  marquee.classList.remove("clink-active");
 }
 
 document.getElementById("cancelButton")
@@ -529,6 +950,22 @@ document.getElementById("previewButton")
 
     payment.style.display = "none";
     success.style.display = "block";
+
+    // Restart the animation on each preview
+    success.classList.remove("play");
+    void success.offsetWidth;
+    success.classList.add("play");
+
+    marquee.classList.remove("clink-active");
+    void marquee.offsetWidth;
+    marquee.classList.add("clink-active");
+  });
+
+marquee.querySelector("h1")
+  .addEventListener("animationend", event => {
+    if (event.animationName === "headerClinkFlash") {
+      marquee.classList.remove("clink-active");
+    }
   });
 
 overlay.addEventListener("click", event => {
@@ -538,6 +975,44 @@ overlay.addEventListener("click", event => {
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") closeOverlay();
 });
+
+// Floating hearts, bubbles and sparkles
+const particles = document.getElementById("particles");
+
+const symbols = [
+  "♡","♥","✦","✧","○",
+  "◦","✧","♡","○","✦",
+  "◦","♥","✧","○","✦",
+  "♡","◦","✧","○","♥"
+];
+
+for (let i = 0; i < symbols.length; i++) {
+  const el = document.createElement("span");
+  el.className = "particle";
+  el.textContent = symbols[i];
+
+  const x = 23 + (i * 37) % 54;
+  const y = 36 + (i * 19) % 45;
+
+  el.style.setProperty("--x", x + "%");
+  el.style.setProperty("--y", y + "%");
+  el.style.setProperty("--s", (13 + i % 4 * 4) + "px");
+
+  el.style.setProperty(
+    "--c",
+    i % 4 === 0 ? "#ff83ca" :
+    i % 3 === 0 ? "#fff5c0" : "#ffd56c"
+  );
+
+  el.style.setProperty(
+    "--drift",
+    ((i % 2 ? 1 : -1) * (20 + (i * 17) % 58)) + "px"
+  );
+
+  el.style.setProperty("--delay", (i % 5) * .08 + "s");
+
+  particles.appendChild(el);
+}
 </script>
 
 </body>
