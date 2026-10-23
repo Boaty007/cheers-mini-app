@@ -1448,13 +1448,15 @@ payButton.addEventListener(
               payment confirmation.
             */
 
-            checkoutStatus.textContent =
-              "Stripe checkout completed. " +
-              "Waiting for server-side " +
-              "payment confirmation.";
+            // Stripe sandbox test celebration
+if (STRIPE_PUBLISHABLE_KEY.startsWith("pk_test_")) {
+  playCelebration(chosenGift);
+} else {
+  checkoutStatus.textContent =
+    "Waiting for verified payment confirmation.";
+}
 
-            payButton.style.display = "none";
-          }
+payButton.style.display = "none";          }
         });
 
       checkoutStatus.textContent =
