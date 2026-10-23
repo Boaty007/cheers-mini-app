@@ -1058,11 +1058,24 @@ M22 29 H52"/>
 
 <button
   class="action"
-  id="backButton"
+  id="chatButton"
   type="button">
-  Back to gifts
+  Back to chat with Maly
 </button>
 
+<button
+  class="action secondary"
+  id="backButton"
+  type="button">
+  Send another gift
+</button>
+
+<button
+  class="action secondary"
+  id="closeCheersButton"
+  type="button">
+  Close Cheers ✕
+</button>
 </div>
 
 </div>
@@ -1615,6 +1628,21 @@ for (let i = 0; i < symbols.length; i++) {
   particles.appendChild(el);
 }
 
+// Cheers navigation buttons
+document.getElementById("chatButton").addEventListener("click", function () {
+  if (window.Telegram && window.Telegram.WebApp) {
+    window.Telegram.WebApp.close();
+  } else {
+    closeOverlay();
+  }
+});
+
+document.getElementById("closeCheersButton").addEventListener("click", function () {
+  if (window.Telegram && window.Telegram.WebApp) {
+    window.Telegram.WebApp.close();
+  } else {
+    closeOverlay();
+  }
+});
 </script>
-</body>
-</html>
+</body></html>
