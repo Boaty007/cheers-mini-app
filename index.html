@@ -1067,13 +1067,13 @@ document.getElementById("closeCheersButton")
   "use strict";
 
   const params = new URLSearchParams(window.location.search);
-
-  // Temporary visual testing interface.
-  // Backend integration will replace this source.
-  const profile = {
-    name: params.get("recipient_name") || "Recipient",
-    photoUrl: params.get("recipient_photo") || ""
-  };
+ const telegramUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
+ const workerId = telegramUser?.id;
+ const workerName = [telegramUser?.first_name, telegramUser?.last_name].filter(Boolean).join(" ");  
+ const profile = {
+    name: params.get("recipient_name") || workerName || "Recipient",    
+ photoUrl: params.get("recipient_photo") || telegramUser?.photo_url || ""  
+ };
 
   // Keep the existing success message in sync.
   recipient.name = profile.name;
