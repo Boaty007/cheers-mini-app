@@ -987,5 +987,143 @@ document.getElementById("closeCheersButton")
  .addEventListener("click",returnToTelegram);
 
 </script>
+ 
+<style>
+/* CHEERS — LARGE TEST RECIPIENT PROFILE */
+.cheers-recipient {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin: 24px auto 30px;
+  text-align: center;
+  color: #f8e7f4;
+}
+
+.cheers-recipient-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid #ffd58e;
+  background: #39204b;
+  box-shadow:
+    0 0 14px #ffc568,
+    0 0 28px #f538ae88;
+  object-fit: cover;
+  display: grid;
+  place-items: center;
+  font-size: 54px;
+  overflow: hidden;
+}
+
+.cheers-recipient-caption {
+  font-size: 14px;
+  color: #f1cfe8;
+}
+
+.cheers-recipient-name {
+  font-size: clamp(25px, 7vw, 34px);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #fff3fa;
+  text-shadow: 0 0 12px #ff58bf;
+  overflow-wrap: anywhere;
+}
+
+.sheet .cheers-recipient {
+  margin: 10px auto 20px;
+}
+
+.sheet .cheers-recipient-photo {
+  width: 95px;
+  height: 95px;
+  font-size: 43px;
+}
+
+.sheet .cheers-recipient-name {
+  font-size: 25px;
+}
+</style>
+
+<script>
+/*
+ * CHEERS VISUAL TEST — ANDY
+ * No registration.
+ * No backend changes.
+ * No payment changes.
+ *
+ * Replace photoUrl with Andy's actual
+ * photo URL when available.
+ */
+
+(function () {
+  "use strict";
+
+  const TEST_PROFILE = {
+    name: "Andy",
+    photoUrl: ""
+  };
+
+  // Keep the existing success message in sync.
+  recipient.name = TEST_PROFILE.name;
+
+  function makeProfile() {
+    const profile = document.createElement("div");
+    profile.className = "cheers-recipient";
+
+    const photo = document.createElement("div");
+    photo.className = "cheers-recipient-photo";
+    photo.textContent = "A";
+
+    if (TEST_PROFILE.photoUrl) {
+      const img = document.createElement("img");
+      img.src = TEST_PROFILE.photoUrl;
+      img.alt = TEST_PROFILE.name + "'s profile photo";
+      img.style.width = "100%";
+      img.style.height = "100%";
+      img.style.objectFit = "cover";
+
+      img.onload = function () {
+        photo.replaceChildren(img);
+      };
+    }
+
+    const caption = document.createElement("div");
+    caption.className = "cheers-recipient-caption";
+    caption.textContent = "Send a little happiness to";
+
+    const name = document.createElement("div");
+    name.className = "cheers-recipient-name";
+    name.textContent = TEST_PROFILE.name;
+
+    profile.append(photo, caption, name);
+    return profile;
+  }
+
+  // Screen 1: drinks menu.
+  const originalProfile =
+    document.querySelector("main .profile");
+
+  originalProfile.replaceWith(makeProfile());
+
+  // Screen 2: gift selection.
+  // Screen 3: Stripe checkout in the same panel.
+  const paymentPanel =
+    document.getElementById("payment");
+
+  paymentPanel.prepend(makeProfile());
+
+  // Screen 4: thank-you celebration.
+  const successPanel =
+    document.getElementById("success");
+
+  successPanel.prepend(makeProfile());
+
+  // Update the existing payment text.
+  document.getElementById("paymentRecipientName")
+    .textContent = TEST_PROFILE.name;
+})();
+</script>
 </body>
 </html>
