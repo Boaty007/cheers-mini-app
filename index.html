@@ -1069,15 +1069,48 @@ document.getElementById("closeCheersButton")
   const params = new URLSearchParams(window.location.search);
  const telegramUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
  const workerId = telegramUser?.id;
- const workerName = [telegramUser?.first_name, telegramUser?.last_name].filter(Boolean).join(" ");  
+ const profileUrl = "https://boaty.app.n8n.cloud/webhook/cheers-telegram-profile";
+ const profileRequest = { worker_id: workerId };
+ const workerName = [telegramUser?.first_name, telegramUser?.last_name].filter(Boolean).join(" ");
+ const recipientId = params.get("worker_id");
+ if (recipientId) {
+  profileRequest.worker_id = recipientId;
+}
+ 
  const profile = {
-    name: params.get("recipient_name") || workerName || "Recipient",    
+  id: recipientId || workerId,    
+  name: params.get("recipient_name") || workerName || "Recipient",    
  photoUrl: params.get("recipient_photo") || telegramUser?.photo_url || ""  
  };
+ async function loadWorkerProfile() {
+  if (!profileRequest.worker_id) return; 
+  try {
+   const response = await fetch(profileUrl, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(profileRequest)
+});
 
-  // Keep the existing success message in sync.
-  recipient.name = profile.name;
+if (!response.ok) {
+  throw new Error("Profile request failed");
+}
 
+const data = await response.json();
+
+if (data.name) {
+  profile.name = data.name;
+  recipient.name = data.name;
+}
+
+if (data.photoUrl) {
+  profile.photoUrl = data.photoUrl;
+  }
+} catch (error) {
+  console.error("Could not load worker profile:", error);
+}
+}
   function makeProfile() {
     const container = document.createElement("div");
     container.className = "cheers-recipient";
@@ -1140,7 +1173,9 @@ document.getElementById("closeCheersButton")
 
   document.getElementById("paymentRecipientName")
     .textContent = profile.name;
-})();
+loadWorkerProfile().then(() => {
+  document.querySelectorAll(".cheers-recipient-name").forEach(el => el.textContent = profile.name);
+});)();
 </script>
 </body>
 </html>
