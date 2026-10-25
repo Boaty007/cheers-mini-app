@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1156,8 +1155,27 @@ function displayName(user) {
   ].filter(Boolean).join(" ").trim();
 }
 
+/*
+  CORRECTED TELEGRAM PHOTOGRAPH SUPPORT
+
+  Accept secure HTTPS images and
+  base64 image data returned by n8n.
+
+  This works for any worker whose
+  photograph the backend can retrieve.
+*/
+
 function safePhoto(value) {
-  if (!value) return "";
+  if (typeof value !== "string" || !value) {
+    return "";
+  }
+
+  if (
+    /^data:image\/(?:png|jpeg|webp|gif);base64,[A-Za-z0-9+/]+={0,2}$/
+      .test(value)
+  ) {
+    return value;
+  }
 
   try {
     const url = new URL(value);
