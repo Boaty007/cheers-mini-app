@@ -2,994 +2,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#422442">
 <title>Cheers!</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-<script src="https://js.stripe.com/v3/"></script>
 
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;min-height:100vh;
- font-family:Arial,Helvetica,sans-serif;color:white;
- background:radial-gradient(ellipse at 15% 4%,#ef86ba55,transparent 45%),
- radial-gradient(ellipse at 92% 27%,#ab7de355,transparent 48%),
- linear-gradient(160deg,#422442,#694369 46%,#352143);
- background-attachment:fixed
-}
-.wallpaper{
- position:fixed;inset:0;width:100%;height:100%;
- pointer-events:none;z-index:0;opacity:.33
-}
-main{
- position:relative;z-index:1;max-width:500px;
- margin:auto;padding:25px 15px 55px
-}
-header{text-align:center;padding:8px 0 16px}
-.neon-marquee{
- display:grid;grid-template-columns:66px minmax(0,1fr) 66px;
- align-items:center;justify-items:center;width:100%;
- min-height:112px
-}
-h1{
- font-family:"Pacifico","Brush Script MT",cursive;
- font-size:clamp(38px,11.5vw,69px);font-weight:400;
- line-height:1.5;white-space:nowrap;margin:0;
- color:#fff1fb;transform:rotate(-3deg);
- -webkit-text-stroke:.65px #ff8acb;
- animation:neonColours 6s ease-in-out infinite
-}
-@keyframes neonColours{
- 0%,100%{
-  color:#fff1fb;
-  text-shadow:0 0 3px white,0 0 9px #ff94d9,
-  0 0 22px #ff2fa7,0 0 45px #d72bd6
- }
- 25%{
-  color:#e7fcff;
-  text-shadow:0 0 3px white,0 0 10px #80ecff,
-  0 0 23px #00c9ff,0 0 45px #4b69ff
- }
- 50%{
-  color:#fff4cd;
-  text-shadow:0 0 3px white,0 0 10px #ffe0a0,
-  0 0 23px #ffb72e,0 0 45px #ff6d6d
- }
- 75%{
-  color:#fff1fb;
-  text-shadow:0 0 3px white,0 0 10px #ff94d9,
-  0 0 23px #ff2fa7,0 0 45px #d72bd6
- }
-}
-.neon-symbol{
- width:76px;height:94px;overflow:visible;
- fill:none;stroke-width:3.5;
- stroke-linecap:round;stroke-linejoin:round;
- animation:symbolGlow 5s ease-in-out infinite
-}
-.neon-heart{stroke:#ffd9f0;color:#ff67ba}
-.neon-cocktail{
- stroke:#d9faff;color:#33dcff;animation-delay:-2s
-}
-.neon-cocktail circle{
- fill:#ff82d4;stroke:#fff0f9;stroke-width:1.5
-}
-@keyframes symbolGlow{
- 0%,100%{
-  opacity:1;
-  filter:drop-shadow(0 0 4px currentColor)
-  drop-shadow(0 0 12px currentColor)
- }
- 50%{
-  opacity:.85;
-  filter:drop-shadow(0 0 8px currentColor)
-  drop-shadow(0 0 20px currentColor)
- }
-}
-.tagline{color:#f0cce3;font-size:14px;margin-top:5px}
-header::after{
- content:"";display:block;height:4px;width:82%;
- margin:20px auto 0;border-radius:20px;
- background:linear-gradient(90deg,transparent,#f23abb,
- #04dafa,#f23abb,transparent);
- box-shadow:0 0 15px #f23abb
-}
-.profile{
- display:flex;align-items:center;justify-content:center;
- gap:12px;margin:24px 0;font-size:14px;color:#eee1ec
-}
-.avatar{
- width:47px;height:47px;border-radius:50%;
- display:grid;place-items:center;font-size:25px;
- background:#39204b;border:2px solid #ffd27a;
- box-shadow:0 0 16px #ffbc65aa
-}
-.grid{
- display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
- gap:10px
-}
-.grid>.gift:last-child:nth-child(3n + 1){grid-column:2}
-.gift{
- position:relative;min-width:0;min-height:150px;
- padding:9px 4px 12px;border:2px solid #b67c4c;
- border-radius:19px;
- background:linear-gradient(145deg,#633b68f2,#2d1b41f2 75%);
- color:white;cursor:pointer;
- box-shadow:inset 0 1px 0 #fff4c344,0 0 12px #a56d3d44;
- transition:transform .2s,border-color .2s
-}
-.gift:hover,.gift:focus-visible{
- outline:0;transform:translateY(-3px);
- border-width:3px;border-color:#ffe9a4;
- animation:giftGlow 1.8s ease-in-out infinite
-}
-.gift:active{transform:scale(.97)}
-@keyframes giftGlow{
- 0%,100%{
-  box-shadow:0 0 8px #ffe8aa,0 0 22px #ffc145,
-  0 0 36px #ff9a0044
- }
- 50%{
-  box-shadow:0 0 14px #fff5c8,0 0 29px #ffbc4a,
-  0 0 44px #ffa50088
- }
-}
-.picture{
- height:82px;display:grid;place-items:center;
- margin-bottom:9px;border-radius:13px;
- background:radial-gradient(ellipse at 50% 65%,
- #a24b8655,transparent 72%)
-}
-.picture span{
- font-size:51px;filter:drop-shadow(0 0 9px #efb45277)
-}
-.name{display:block;font-size:12px;font-weight:800}
-.price{
- display:block;margin-top:5px;font-size:14px;
- color:#ffd58e;font-weight:800
-}
-footer{
- text-align:center;color:#c9b4cb;
- font-size:11px;margin-top:25px
-}
-.overlay{
- position:fixed;inset:0;z-index:20;
- background:#030512bc;display:none;
- align-items:flex-end;justify-content:center
-}
-.overlay.open{display:flex}
-.sheet{
- width:100%;max-width:500px;max-height:94dvh;
- overflow-y:auto;
- padding:17px 23px calc(24px + env(safe-area-inset-bottom));
- border:1px solid #d8a36e;border-bottom:0;
- border-radius:28px 28px 0 0;
- background:linear-gradient(155deg,#593458,#362342 68%,#241b34);
- box-shadow:0 -14px 48px #000a;
- animation:sheetRise .28s ease-out
-}
-@keyframes sheetRise{
- from{transform:translateY(40px);opacity:.5}
- to{transform:translateY(0);opacity:1}
-}
-.handle{
- width:48px;height:5px;margin:0 auto 18px;
- background:#8990a3;border-radius:10px
-}
-.sheet h2{margin:0 0 9px}
-.sheet p{color:#e3d5e7;font-size:14px;line-height:1.5}
-.summary{
- display:flex;justify-content:space-between;
- padding:17px 0;border-bottom:1px solid #ffffff30
-}
-.summary strong{color:#ffd18e}
-.action{
- display:block;width:100%;border:0;border-radius:14px;
- padding:16px;margin-top:16px;background:#ffd18e;
- color:#1b2333;font-weight:800;font-size:16px;cursor:pointer
-}
-.action:disabled{opacity:.55;cursor:wait}
-.secondary{
- background:transparent;color:white;
- border:1px solid #a68aa8;margin-top:10px
-}
-.note{text-align:center;font-size:12px!important}
-#checkoutContainer{
- margin-top:15px;min-height:0;overflow:hidden;
- border-radius:12px
-}
-#checkoutStatus{
- color:#fbe1ee;font-size:13px;line-height:1.5;margin-top:12px
-}
-#checkoutError{
- color:#ffcfca;font-size:13px;line-height:1.5;margin-top:12px
-}
-.success{
- display:none;text-align:center;padding:0 0 6px
-}
-.success h2{
- font:900 clamp(36px,10vw,51px) Georgia,serif;
- letter-spacing:2px;margin:0;color:#fff3b1;
- -webkit-text-stroke:.6px #ffc365;
- text-shadow:0 0 8px #ffb63c,0 0 22px #ff9b2e,
- 0 0 35px #ec30b8
-}
-.success p{margin:14px 0 18px}
-.celebration{
- position:relative;height:207px;max-width:340px;
- margin:0 auto;isolation:isolate;overflow:hidden
-}
-.celebration::before{
- content:"";position:absolute;inset:36px 28px 3px;
- border-radius:50%;
- background:radial-gradient(ellipse,#ffbf3855,transparent 66%);
- filter:blur(12px);opacity:.6
-}
-.flute{
- position:absolute;top:27px;width:102px;height:159px;
- overflow:visible;filter:drop-shadow(0 0 8px #ffc65a88)
-}
-.flute.left{
- left:calc(50% - 106px);transform-origin:50% 92%
-}
-.flute.right{
- right:calc(50% - 106px);transform-origin:50% 92%
-}
-.flute .glass{
- fill:#f9fbff16;stroke:#f7f3e6;stroke-width:3.3;
- stroke-linejoin:round
-}
-.flute .drink{fill:#f8b932c7}
-.flute .shine{
- fill:none;stroke:#ffffffc9;stroke-width:2.6;
- stroke-linecap:round
-}
-.flute .stem{
- stroke:#f3eddf;stroke-width:4;stroke-linecap:round
-}
-.flute .tiny{fill:#fff4bf}
-.impact{
- position:absolute;left:50%;top:47px;width:16px;height:16px;
- transform:translateX(-50%) scale(0);border-radius:50%;
- background:#fff9d5;
- box-shadow:0 0 14px 6px #fff8b7,0 0 35px 14px #ffbc3d;
- opacity:0;z-index:4
-}
-.impact::before,.impact::after{
- content:"";position:absolute;left:50%;top:50%;
- width:72px;height:3px;
- background:linear-gradient(90deg,transparent,#fff3b6,transparent);
- transform:translate(-50%,-50%)
-}
-.impact::after{
- transform:translate(-50%,-50%) rotate(90deg)
-}
-.particle{
- position:absolute;left:var(--x);top:var(--y);
- font-size:var(--s);color:var(--c);opacity:0;
- pointer-events:none;z-index:5;
- text-shadow:0 0 9px currentColor
-}
-.success.play .flute.left{
- animation:clinkLeft 3.6s ease-in-out both
-}
-.success.play .flute.right{
- animation:clinkRight 3.6s ease-in-out both
-}
-.success.play .impact{
- animation:clinkFlash 3.6s linear both
-}
-.success.play .particle{
- animation:floatUp 3.6s ease-out both;
- animation-delay:var(--delay)
-}
-.success.play h2{
- animation:signFlash 3.6s linear both
-}
-@keyframes clinkLeft{
- 0%{transform:translateX(-29px) rotate(-18deg)}
- 23%{transform:translateX(-9px) rotate(-8deg)}
- 32%{transform:translateX(25px) rotate(9deg)}
- 38%{transform:translateX(18px) rotate(4deg)}
- 46%,100%{transform:translateX(21px) rotate(6deg)}
-}
-@keyframes clinkRight{
- 0%{transform:translateX(29px) rotate(18deg)}
- 23%{transform:translateX(9px) rotate(8deg)}
- 32%{transform:translateX(-25px) rotate(-9deg)}
- 38%{transform:translateX(-18px) rotate(-4deg)}
- 46%,100%{transform:translateX(-21px) rotate(-6deg)}
-}
-@keyframes clinkFlash{
- 0%,30%,39%,100%{
-  opacity:0;transform:translateX(-50%) scale(0)
- }
- 32%{opacity:1;transform:translateX(-50%) scale(1.6)}
- 35%{opacity:.8;transform:translateX(-50%) scale(2.6)}
-}
-@keyframes floatUp{
- 0%,28%{
-  opacity:0;transform:translate(0,15px) scale(.35)
- }
- 38%{
-  opacity:1;
-  transform:translate(calc(var(--drift)*.2),-7px) scale(.85)
- }
- 70%{
-  opacity:.85;
-  transform:translate(calc(var(--drift)*.7),-66px) scale(1.05)
- }
- 100%{
-  opacity:0;
-  transform:translate(var(--drift),-135px) scale(.7)
- }
-}
-@keyframes signFlash{
- 0%,29%{filter:brightness(.85)}
- 32%{
-  filter:brightness(1.65) drop-shadow(0 0 10px #fff4a8)
- }
- 36%{filter:brightness(1.2)}
- 40%{
-  filter:brightness(1.35) drop-shadow(0 0 8px #ff42d2)
- }
- 47%,100%{filter:brightness(1.08)}
-}
-.neon-marquee.clink-active h1{
- animation:headerClinkFlash 3.6s linear 1 both
-}
-@keyframes headerClinkFlash{
- 0%,29%{filter:brightness(1)}
- 32%{
-  filter:brightness(1.55);color:#fffefa;
-  text-shadow:0 0 5px #fff,0 0 12px #fff,
-  0 0 25px #fff1a0,0 0 42px #ffdd51
- }
- 36%{filter:brightness(1.15)}
- 40%{filter:brightness(1.3)}
- 48%,100%{filter:brightness(1)}
-}
-@media(max-width:370px){
- .neon-marquee{
-  grid-template-columns:54px minmax(0,1fr) 54px;
-  min-height:95px
- }
- .neon-marquee h1{font-size:clamp(34px,10.5vw,46px)}
- .neon-symbol{width:62px;height:78px}
- .grid{gap:7px}
- .gift{min-height:137px}
- .picture{height:70px}
- .picture span{font-size:43px}
-}
-@media(prefers-reduced-motion:reduce){
- .neon-symbol,h1,.success.play .flute,
- .success.play .particle,.success.play .impact,
- .success.play h2,.neon-marquee.clink-active h1{
-  animation:none!important
- }
- .flute.left{transform:translateX(21px) rotate(6deg)}
- .flute.right{transform:translateX(-21px) rotate(-6deg)}
- .particle{display:none}
-}
-</style>
-</head>
+* { box-sizing: border-box; }
 
-<body>
-<svg class="wallpaper" aria-hidden="true">
-<defs>
-<pattern id="cheersPattern" width="240" height="246"
- patternUnits="userSpaceOnUse">
-<g fill="none" stroke="#ffd0e6" stroke-width="3.2"
- stroke-linecap="round" stroke-linejoin="round" opacity=".72">
-<path d="M37 37 C20 16 3 34 16 51 C23 61 37 70 41 75 C48 63 72 48 64 32 C58 20 44 22 37 37Z"/>
-<path d="M5 28 L0 20 M74 31 L84 24 M72 65 L81 72 M28 81 L24 90"/>
-<g transform="rotate(13 170 54)">
-<path d="M145 30 Q171 33 197 30 L171 72Z M171 72 L171 94 M154 95 Q171 91 188 95 M179 33 L190 16"/>
-<path d="M149 40 Q171 44 193 40"/>
-</g>
-<g transform="rotate(-14 89 136)">
-<path d="M70 109 Q90 105 111 109 C111 137 104 149 91 155 C79 149 70 133 70 109Z M91 155 L91 178 M75 181 Q91 175 107 181"/>
-<path d="M74 127 Q91 132 107 125"/>
-</g>
-<path d="M178 163 C164 148 146 161 156 177 C162 187 179 199 181 201 C188 190 209 181 206 165 C203 151 186 150 178 163Z"/>
-<path d="M154 171 L143 165 M207 174 L219 169 M174 204 L168 216"/>
-<path d="M118 31 L122 19 M130 37 L141 31 M117 47 L130 53 M17 160 L27 156 M22 173 L34 171 M214 115 L225 109 M212 128 L228 128"/>
-<circle cx="134" cy="107" r="5"/>
-<circle cx="147" cy="96" r="3"/>
-<circle cx="143" cy="117" r="2"/>
-<path d="M32 218 Q42 205 52 218 Q62 231 72 218"/>
-</g>
-<g fill="#ffe3ee" opacity=".75"
- font-family="Georgia,serif" font-style="italic">
-<text x="6" y="115" font-size="19"
- transform="rotate(-11 6 115)">cheers!</text>
-<text x="134" y="233" font-size="18"
- transform="rotate(9 134 233)">cheers</text>
-</g>
-<g fill="#ffe5b0" opacity=".65">
-<circle cx="223" cy="207" r="3"/>
-<circle cx="228" cy="198" r="2"/>
-<circle cx="10" cy="194" r="2.5"/>
-</g>
-</pattern>
-</defs>
-<rect width="100%" height="100%" fill="url(#cheersPattern)"/>
-</svg>
-
-<main>
-<header>
-<div class="neon-marquee">
-<svg class="neon-symbol neon-heart" viewBox="0 0 70 82"
- aria-hidden="true">
-<path d="M35 66 C26 58 8 43 8 27 C8 13 25 9 35 23 C45 9 62 13 62 27 C62 43 44 58 35 66Z"/>
-</svg>
-<h1>CHEERS!</h1>
-<svg class="neon-symbol neon-cocktail" viewBox="0 0 75 82"
- aria-hidden="true">
-<path d="M7 16 H67 L37 49 Z M37 49 V69 M20 70 H54 M43 18 L57 5 M55 7 H68 M22 29 H52"/>
-<circle cx="30" cy="24" r="3"/>
-</svg>
-</div>
-<div class="tagline">A little gift. A big smile.</div>
-</header>
-
-<div class="profile">
-<div class="avatar" id="recipientAvatar" aria-hidden="true">👩</div>
-<span>Send a little happiness to
-<b id="recipientName">Maly</b></span>
-</div>
-
-<div class="grid" id="gifts"></div>
-<footer>Cheers · Stripe sandbox test · No real charges</footer>
-</main>
-
-<div class="overlay" id="overlay" role="dialog"
- aria-label="Gift payment" aria-modal="true"
- aria-hidden="true">
-<div class="sheet">
-<div class="handle"></div>
-
-<div id="payment">
-<h2>Send a little happiness</h2>
-<p>Your gift for <span id="paymentRecipientName">Maly</span></p>
-<div class="summary">
-<span id="selectedName"></span>
-<strong id="selectedPrice"></strong>
-</div>
-<button class="action" id="payButton" type="button">
-Continue to secure payment
-</button>
-<div id="checkoutStatus" role="status"></div>
-<div id="checkoutError" role="alert"></div>
-<div id="checkoutContainer"></div>
-<button class="action secondary" id="cancelButton" type="button">
-Back to gifts
-</button>
-<p class="note">Stripe test mode. No real money will be charged.</p>
-</div>
-
-<div class="success" id="success">
-<div class="celebration" aria-label="Two champagne glasses clink">
-
-<svg class="flute left" viewBox="0 0 110 180"
- aria-hidden="true">
-<path class="drink" d="M29 51 Q29 88 55 105 Q81 88 81 51Z"/>
-<path class="glass" d="M25 15 L85 15 Q87 91 55 108 Q23 91 25 15Z"/>
-<path class="shine" d="M35 27 L35 61"/>
-<path class="stem" d="M55 108 V160 M34 164 Q55 158 76 164"/>
-<circle class="tiny" cx="44" cy="69" r="3"/>
-<circle class="tiny" cx="61" cy="85" r="2.5"/>
-<circle class="tiny" cx="65" cy="58" r="2"/>
-</svg>
-
-<svg class="flute right" viewBox="0 0 110 180"
- aria-hidden="true">
-<path class="drink" d="M29 51 Q29 88 55 105 Q81 88 81 51Z"/>
-<path class="glass" d="M25 15 L85 15 Q87 91 55 108 Q23 91 25 15Z"/>
-<path class="shine" d="M35 27 L35 61"/>
-<path class="stem" d="M55 108 V160 M34 164 Q55 158 76 164"/>
-<circle class="tiny" cx="44" cy="69" r="3"/>
-<circle class="tiny" cx="61" cy="85" r="2.5"/>
-<circle class="tiny" cx="65" cy="58" r="2"/>
-</svg>
-
-<div class="impact" aria-hidden="true"></div>
-<div id="particles" aria-hidden="true"></div>
-</div>
-
-<h2>CHEERS!</h2>
-<p id="successMessage"></p>
-<button class="action" id="chatButton" type="button">
-Back to chat
-</button>
-<button class="action secondary" id="backButton" type="button">
-Send another gift
-</button>
-<button class="action secondary" id="closeCheersButton" type="button">
-Close Cheers ✕
-</button>
-</div>
-</div>
-</div>
-
-<script>
-"use strict";
-
-/*
- CHEERS SANDBOX
- This is a publishable Stripe TEST key.
- Never place Stripe secret keys in HTML.
-*/
-const STRIPE_PUBLISHABLE_KEY =
-"pk_test_51URxGYBWoGBQK6CmRjUTgYV6ZFzMKYZIIi9abR9xO76gmSWkHYhjUKXV2bpWAGv84t8fUY69pgnhYEiI5gXpGoqq00RVbigoNe";
-
-const CHECKOUT_URL =
-"https://boaty.app.n8n.cloud/webhook/cheers-payment";
-
-/*
- RECIPIENT DISPLAY DEMONSTRATION
-
- One Cheers app can support many workers.
-
- Telegram does NOT automatically reveal the
- person in the customer's private conversation.
-
- The launch reference below is for demonstration
- only. It is NOT verified proof of identity.
-
- A production system needs:
- - Worker registration
- - Server-issued recipient references
- - Telegram initData verification on the server
- - Verified Stripe payment confirmation
- - Server-side allocation to the correct worker
-*/
-
-const DEMO_RECIPIENTS = Object.freeze({
- maly: {
-  name:"Maly",
-  avatar:"👩"
- }
-});
-
-function readLaunchReference(){
- const telegram = window.Telegram?.WebApp;
- const startParam =
-  telegram?.initDataUnsafe?.start_param;
-
- const queryParam =
-  new URLSearchParams(window.location.search)
-  .get("tgWebAppStartParam");
-
- const candidate = startParam || queryParam || "";
- const match =
-  /^worker_([a-z0-9_-]{1,40})$/.exec(candidate);
-
- return match ? match[1] : null;
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(ellipse at 15% 4%, #ef86ba55, transparent 45%),
+    radial-gradient(ellipse at 92% 27%, #ab7de355, transparent 48%),
+    linear-gradient(160deg, #422442, #694369 46%, #352143);
+  background-attachment: fixed;
 }
 
-const recipientReference = readLaunchReference();
-
-const recipient =
- (recipientReference &&
-  DEMO_RECIPIENTS[recipientReference]) ||
- DEMO_RECIPIENTS.maly;
-
-function showRecipient(){
- document.getElementById("recipientName")
-  .textContent = recipient.name;
-
- document.getElementById("paymentRecipientName")
-  .textContent = recipient.name;
-
- document.getElementById("recipientAvatar")
-  .textContent = recipient.avatar;
+.wallpaper {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: .33;
+  z-index: 0;
 }
 
-showRecipient();
-
-/* The seven approved gifts */
-
-const gifts = [
- {id:"coffee",name:"Coffee",price:3.00,icon:"☕"},
- {id:"beer",name:"Beer",price:4.99,icon:"🍺"},
- {id:"cocktail",name:"Cocktail",price:5.99,icon:"🍸"},
- {id:"wine",name:"Wine",price:6.99,icon:"🍷"},
- {id:"shot",name:"Shot",price:4.99,icon:"🥃"},
- {id:"champagne",name:"Champagne",price:9.99,icon:"🍾"},
- {id:"bell",name:"Ring the Bell",price:14.99,icon:"🔔"}
-];
-
-/* Page elements */
-
-const marquee =
- document.querySelector(".neon-marquee");
-
-const grid =
- document.getElementById("gifts");
-
-const overlay =
- document.getElementById("overlay");
-
-const payment =
- document.getElementById("payment");
-
-const success =
- document.getElementById("success");
-
-const payButton =
- document.getElementById("payButton");
-
-const checkoutContainer =
- document.getElementById("checkoutContainer");
-
-const checkoutStatus =
- document.getElementById("checkoutStatus");
-
-const checkoutError =
- document.getElementById("checkoutError");
-
-let chosenGift = null;
-let embeddedCheckout = null;
-let checkoutBusy = false;
-
-/* Build all seven gift buttons */
-
-for(const gift of gifts){
- const button = document.createElement("button");
- button.className = "gift";
- button.type = "button";
-
- const picture = document.createElement("div");
- picture.className = "picture";
-
- const icon = document.createElement("span");
- icon.setAttribute("aria-hidden","true");
- icon.textContent = gift.icon;
- picture.appendChild(icon);
-
- const name = document.createElement("span");
- name.className = "name";
- name.textContent = gift.name;
-
- const price = document.createElement("span");
- price.className = "price";
- price.textContent = "$" + gift.price.toFixed(2);
-
- button.appendChild(picture);
- button.appendChild(name);
- button.appendChild(price);
-
- button.addEventListener("click",()=>{
-  openGift(gift);
- });
-
- grid.appendChild(button);
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 500px;
+  margin: auto;
+  padding: 25px 15px 55px;
 }
 
-/* Stripe setup */
+header {
+  text-align: center;
+  padding: 8px 0 16px;
+}
 
-let stripe = null;
+.neon-marquee {
+  display: grid;
+  grid-template-columns: 66px minmax(0,1fr) 66px;
+  align-items: center;
+  justify-items: center;
+  min-height: 112px;
+}
 
-function getStripe(){
- if(stripe){
-  return stripe;
- }
+h1 {
+  font-family: "Pacifico", "Brush Script MT", cursive;
+  font-size: clamp(38px, 11.5vw, 69px);
+  font-weight: 400;
+  line-height: 1.5;
+  white-space: nowrap;
+  margin: 0;
+  color: #fff1fb;
+  transform: rotate(-3deg);
+  -webkit-text-stroke: .65px #ff8acb;
+  animation: neonColours 6s ease-in-out infinite;
+}
 
- if(typeof window.Stripe !== "function"){
-  throw new Error(
-   "Stripe could not load. Check your internet connection."
+@keyframes neonColours {
+  0%, 100% {
+    color: #fff1fb;
+    text-shadow:
+      0 0 3px white,
+      0 0 9px #ff94d9,
+      0 0 22px #ff2fa7,
+      0 0 45px #d72bd6;
+  }
+  25% {
+    color: #e7fcff;
+    text-shadow:
+      0 0 3px white,
+      0 0 10px #80ecff,
+      0 0 23px #00c9ff,
+      0 0 45px #4b69ff;
+  }
+  50% {
+    color: #fff4cd;
+    text-shadow:
+      0 0 3px white,
+      0 0 10px #ffe0a0,
+      0 0 23px #ffb72e,
+      0 0 45px #ff6d6d;
+  }
+  75% {
+    color: #fff1fb;
+    text-shadow:
+      0 0 3px white,
+      0 0 10px #ff94d9,
+      0 0 22px #ff2fa7,
+      0 0 45px #d72bd6;
+  }
+}
+
+.neon-symbol {
+  width: 76px;
+  height: 94px;
+  overflow: visible;
+  fill: none;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: symbolGlow 5s ease-in-out infinite;
+}
+
+.neon-heart {
+  stroke: #ffd9f0;
+  color: #ff67ba;
+}
+
+.neon-cocktail {
+  stroke: #d9faff;
+  color: #33dcff;
+  animation-delay: -2s;
+}
+
+.neon-cocktail circle {
+  fill: #ff82d4;
+  stroke: #fff0f9;
+  stroke-width: 1.5;
+}
+
+@keyframes symbolGlow {
+  0%,100% {
+    opacity: 1;
+    filter:
+      drop-shadow(0 0 4px currentColor)
+      drop-shadow(0 0 12px currentColor);
+  }
+  50% {
+    opacity: .85;
+    filter:
+      drop-shadow(0 0 8px currentColor)
+      drop-shadow(0 0 20px currentColor);
+  }
+}
+
+.tagline {
+  color: #f0cce3;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+header::after {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 82%;
+  margin: 20px auto 0;
+  border-radius: 20px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #f23abb,
+    #04dafa,
+    #f23abb,
+    transparent
   );
- }
-
- stripe = window.Stripe(STRIPE_PUBLISHABLE_KEY);
- return stripe;
+  box-shadow: 0 0 15px #f23abb;
 }
 
-/* Open selected gift */
+/* WORKER PROFILE */
 
-function openGift(gift){
- if(checkoutBusy){
-  return;
- }
-
- resetCheckout();
- chosenGift = gift;
-
- document.getElementById("selectedName")
-  .textContent = gift.name;
-
- document.getElementById("selectedPrice")
-  .textContent = "$" + gift.price.toFixed(2);
-
- payment.style.display = "block";
- success.style.display = "none";
-
- success.classList.remove("play");
- marquee.classList.remove("clink-active");
-
- overlay.classList.add("open");
- overlay.setAttribute("aria-hidden","false");
-}
-
-/* Reset checkout */
-
-function resetCheckout(){
- if(embeddedCheckout){
-  try{
-   embeddedCheckout.destroy();
-  }catch(error){
-   console.warn(
-    "Could not destroy previous checkout",
-    error
-   );
-  }
-  embeddedCheckout = null;
- }
-
- checkoutContainer.replaceChildren();
- checkoutStatus.textContent = "";
- checkoutError.textContent = "";
-
- payButton.style.display = "block";
- payButton.disabled = false;
- payButton.textContent =
-  "Continue to secure payment";
-}
-
-/* Close payment panel */
-
-function closeOverlay(){
- if(checkoutBusy){
-  return;
- }
-
- resetCheckout();
-
- overlay.classList.remove("open");
- overlay.setAttribute("aria-hidden","true");
-
- success.classList.remove("play");
- marquee.classList.remove("clink-active");
-}
-
-document.getElementById("cancelButton")
- .addEventListener("click",closeOverlay);
-
-document.getElementById("backButton")
- .addEventListener("click",closeOverlay);
-
-overlay.addEventListener("click",event=>{
- if(event.target === overlay){
-  closeOverlay();
- }
-});
-
-document.addEventListener("keydown",event=>{
- if(event.key === "Escape"){
-  closeOverlay();
- }
-});
-
-/*
- Stripe checkout.
-
- The server must calculate the amount
- from the gift ID, never trust the browser.
-
- The existing server currently receives
- only the gift ID.
-
- No recipient is credited by this code.
-*/
-
-payButton.addEventListener("click",async()=>{
- if(!chosenGift || checkoutBusy){
-  return;
- }
-
- checkoutBusy = true;
- payButton.disabled = true;
- payButton.textContent = "Opening payment...";
-
- checkoutError.textContent = "";
- checkoutStatus.textContent =
-  "Connecting to Stripe test checkout...";
-
- try{
-  const stripeInstance = getStripe();
-
-  const response = await fetch(
-   CHECKOUT_URL,
-   {
-    method:"POST",
-    headers:{
-     "Content-Type":"application/json"
-    },
-    body:JSON.stringify({
-     gift:chosenGift.id
-    })
-   }
-  );
-
-  if(!response.ok){
-   throw new Error(
-    "Payment server returned error " +
-    response.status
-   );
-  }
-
-  const data = await response.json();
-
-  if(
-   !data ||
-   typeof data.clientSecret !== "string" ||
-   !data.clientSecret
-  ){
-   throw new Error(
-    "The payment server did not return a valid checkout secret."
-   );
-  }
-
-  embeddedCheckout =
-   await stripeInstance.initEmbeddedCheckout({
-    clientSecret:data.clientSecret,
-
-    onComplete:()=>{
-     /*
-      This callback is NOT verified
-      gift delivery.
-
-      Sandbox celebration only.
-     */
-     if(
-      STRIPE_PUBLISHABLE_KEY.startsWith("pk_test_")
-     ){
-      playCelebration(chosenGift);
-     }else{
-      checkoutStatus.textContent =
-       "Waiting for verified payment confirmation.";
-     }
-
-     payButton.style.display = "none";
-    }
-   });
-
-  checkoutStatus.textContent =
-   "Secure Stripe test checkout";
-
-  embeddedCheckout.mount("#checkoutContainer");
-
-  payButton.style.display = "none";
-
- }catch(error){
-  console.error("Cheers checkout error:",error);
-
-  checkoutStatus.textContent = "";
-
-  checkoutError.textContent =
-   "Checkout could not open: " +
-   error.message +
-   " No payment was made by this attempt.";
-
-  payButton.style.display = "block";
-  payButton.textContent = "Try again";
-
- }finally{
-  checkoutBusy = false;
-  payButton.disabled = false;
- }
-});
-
-/* Champagne celebration */
-
-function playCelebration(gift){
- if(!gift){
-  return;
- }
-
- document.getElementById("successMessage")
-  .textContent =
-   "A " +
-   gift.name.toLowerCase() +
-   " for " +
-   recipient.name +
-   ". A little gift. A big smile.";
-
- payment.style.display = "none";
- success.style.display = "block";
-
- success.classList.remove("play");
- void success.offsetWidth;
- success.classList.add("play");
-
- marquee.classList.remove("clink-active");
- void marquee.offsetWidth;
- marquee.classList.add("clink-active");
-}
-
-marquee.querySelector("h1")
- .addEventListener("animationend",event=>{
-  if(event.animationName === "headerClinkFlash"){
-   marquee.classList.remove("clink-active");
-  }
- });
-
-/* Celebration particles */
-
-const particles =
- document.getElementById("particles");
-
-const symbols = [
- "♡","♥","✦","✧","○",
- "◦","✧","♡","○","✦",
- "◦","♥","✧","○","✦",
- "♡","◦","✧","○","♥"
-];
-
-for(let i=0;i<symbols.length;i++){
- const el = document.createElement("span");
- el.className = "particle";
- el.textContent = symbols[i];
-
- const x = 23 + (i*37)%54;
- const y = 36 + (i*19)%45;
-
- el.style.setProperty("--x",x+"%");
- el.style.setProperty("--y",y+"%");
- el.style.setProperty(
-  "--s",
-  (13+(i%4)*4)+"px"
- );
-
- el.style.setProperty(
-  "--c",
-  i%4===0 ? "#ff83ca" :
-  i%3===0 ? "#fff5c0" : "#ffd56c"
- );
-
- el.style.setProperty(
-  "--drift",
-  ((i%2 ? 1:-1)*
-  (20+(i*17)%58))+"px"
- );
-
- el.style.setProperty(
-  "--delay",
-  ((i%5)*.08)+"s"
- );
-
- particles.appendChild(el);
-}
-
-/* Telegram navigation */
-
-function returnToTelegram(){
- if(
-  window.Telegram &&
-  window.Telegram.WebApp
- ){
-  window.Telegram.WebApp.close();
- }else{
-  closeOverlay();
- }
-}
-
-document.getElementById("chatButton")
- .addEventListener("click",returnToTelegram);
-
-document.getElementById("closeCheersButton")
- .addEventListener("click",returnToTelegram);
-
-</script>
- 
-<style>
-/* CHEERS — LARGE TEST RECIPIENT PROFILE */
 .cheers-recipient {
   display: flex;
   flex-direction: column;
@@ -1010,11 +197,16 @@ document.getElementById("closeCheersButton")
   box-shadow:
     0 0 14px #ffc568,
     0 0 28px #f538ae88;
-  object-fit: cover;
   display: grid;
   place-items: center;
   font-size: 54px;
   overflow: hidden;
+}
+
+.cheers-recipient-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .cheers-recipient-caption {
@@ -1044,139 +236,1849 @@ document.getElementById("closeCheersButton")
 .sheet .cheers-recipient-name {
   font-size: 25px;
 }
+
+.profile-status {
+  text-align: center;
+  font-size: 12px;
+  color: #f1cfe8;
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.worker-tools {
+  margin: 15px 0 24px;
+  padding: 16px;
+  border: 1px solid #ffd58e;
+  border-radius: 18px;
+  background: #39204b99;
+  text-align: center;
+}
+
+.worker-tools[hidden] {
+  display: none;
+}
+
+.worker-tools-title {
+  font-weight: 800;
+  color: #ffd58e;
+}
+
+.worker-tools p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+#shareStatus {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  margin-top: 8px;
+}
+
+/* DRINKS */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 10px;
+}
+
+.grid > .gift:last-child:nth-child(3n + 1) {
+  grid-column: 2;
+}
+
+.gift {
+  position: relative;
+  min-width: 0;
+  min-height: 150px;
+  padding: 9px 4px 12px;
+  border: 2px solid #b67c4c;
+  border-radius: 19px;
+  background: linear-gradient(
+    145deg,
+    #633b68f2,
+    #2d1b41f2 75%
+  );
+  color: white;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 #fff4c344,
+    0 0 12px #a56d3d44;
+  transition: transform .2s, border-color .2s;
+}
+
+.gift:hover,
+.gift:focus-visible {
+  outline: 0;
+  transform: translateY(-3px);
+  border-width: 3px;
+  border-color: #ffe9a4;
+  animation: giftGlow 1.8s ease-in-out infinite;
+}
+
+.gift:active {
+  transform: scale(.97);
+}
+
+@keyframes giftGlow {
+  0%,100% {
+    box-shadow:
+      0 0 8px #ffe8aa,
+      0 0 22px #ffc145,
+      0 0 36px #ff9a0044;
+  }
+  50% {
+    box-shadow:
+      0 0 14px #fff5c8,
+      0 0 29px #ffbc4a,
+      0 0 44px #ffa50088;
+  }
+}
+
+.picture {
+  height: 82px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 9px;
+  border-radius: 13px;
+  background: radial-gradient(
+    ellipse at 50% 65%,
+    #a24b8655,
+    transparent 72%
+  );
+}
+
+.picture span {
+  font-size: 51px;
+  filter: drop-shadow(0 0 9px #efb45277);
+}
+
+.name {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.price {
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #ffd58e;
+  font-weight: 800;
+}
+
+footer {
+  text-align: center;
+  color: #c9b4cb;
+  font-size: 11px;
+  margin-top: 25px;
+}
+
+/* PAYMENT OVERLAY */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: #030512bc;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.overlay.open {
+  display: flex;
+}
+
+.sheet {
+  width: 100%;
+  max-width: 500px;
+  max-height: 94dvh;
+  overflow-y: auto;
+  padding: 17px 23px calc(
+    24px + env(safe-area-inset-bottom)
+  );
+  border: 1px solid #d8a36e;
+  border-bottom: 0;
+  border-radius: 28px 28px 0 0;
+  background: linear-gradient(
+    155deg,
+    #593458,
+    #362342 68%,
+    #241b34
+  );
+  box-shadow: 0 -14px 48px #000a;
+  animation: sheetRise .28s ease-out;
+}
+
+@keyframes sheetRise {
+  from {
+    transform: translateY(40px);
+    opacity: .5;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.handle {
+  width: 48px;
+  height: 5px;
+  margin: 0 auto 18px;
+  background: #8990a3;
+  border-radius: 10px;
+}
+
+.sheet h2 {
+  margin: 0 0 9px;
+}
+
+.sheet p {
+  color: #e3d5e7;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 17px 0;
+  border-bottom: 1px solid #ffffff30;
+}
+
+.summary strong {
+  color: #ffd18e;
+}
+
+.action {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 16px;
+  background: #ffd18e;
+  color: #1b2333;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.action:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+.secondary {
+  background: transparent;
+  color: white;
+  border: 1px solid #a68aa8;
+  margin-top: 10px;
+}
+
+.note {
+  text-align: center;
+  font-size: 12px !important;
+}
+
+#checkoutContainer {
+  margin-top: 15px;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+#checkoutStatus {
+  color: #fbe1ee;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 12px;
+}
+
+#checkoutError {
+  color: #ffcfca;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 12px;
+}
+
+.success {
+  display: none;
+  text-align: center;
+  padding: 0 0 6px;
+}
+
+.success h2 {
+  font: 900 clamp(36px,10vw,51px) Georgia,serif;
+  letter-spacing: 2px;
+  margin: 0;
+  color: #fff3b1;
+  -webkit-text-stroke: .6px #ffc365;
+  text-shadow:
+    0 0 8px #ffb63c,
+    0 0 22px #ff9b2e,
+    0 0 35px #ec30b8;
+}
+
+.success p {
+  margin: 14px 0 18px;
+}
+
+/* CHAMPAGNE CELEBRATION */
+
+.celebration {
+  position: relative;
+  height: 207px;
+  max-width: 340px;
+  margin: 0 auto;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.celebration::before {
+  content: "";
+  position: absolute;
+  inset: 36px 28px 3px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    #ffbf3855,
+    transparent 66%
+  );
+  filter: blur(12px);
+  opacity: .6;
+}
+
+.flute {
+  position: absolute;
+  top: 27px;
+  width: 102px;
+  height: 159px;
+  overflow: visible;
+  filter: drop-shadow(0 0 8px #ffc65a88);
+}
+
+.flute.left {
+  left: calc(50% - 106px);
+  transform-origin: 50% 92%;
+}
+
+.flute.right {
+  right: calc(50% - 106px);
+  transform-origin: 50% 92%;
+}
+
+.flute .glass {
+  fill: #f9fbff16;
+  stroke: #f7f3e6;
+  stroke-width: 3.3;
+  stroke-linejoin: round;
+}
+
+.flute .drink {
+  fill: #f8b932c7;
+}
+
+.flute .shine {
+  fill: none;
+  stroke: #ffffffc9;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+
+.flute .stem {
+  stroke: #f3eddf;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.flute .tiny {
+  fill: #fff4bf;
+}
+
+.impact {
+  position: absolute;
+  left: 50%;
+  top: 47px;
+  width: 16px;
+  height: 16px;
+  transform: translateX(-50%) scale(0);
+  border-radius: 50%;
+  background: #fff9d5;
+  box-shadow:
+    0 0 14px 6px #fff8b7,
+    0 0 35px 14px #ffbc3d;
+  opacity: 0;
+  z-index: 4;
+}
+
+.impact::before,
+.impact::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 72px;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #fff3b6,
+    transparent
+  );
+  transform: translate(-50%,-50%);
+}
+
+.impact::after {
+  transform:
+    translate(-50%,-50%)
+    rotate(90deg);
+}
+
+.particle {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  font-size: var(--s);
+  color: var(--c);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+  text-shadow: 0 0 9px currentColor;
+}
+
+.success.play .flute.left {
+  animation: clinkLeft 3.6s ease-in-out both;
+}
+
+.success.play .flute.right {
+  animation: clinkRight 3.6s ease-in-out both;
+}
+
+.success.play .impact {
+  animation: clinkFlash 3.6s linear both;
+}
+
+.success.play .particle {
+  animation: floatUp 3.6s ease-out both;
+  animation-delay: var(--delay);
+}
+
+.success.play h2 {
+  animation: signFlash 3.6s linear both;
+}
+
+@keyframes clinkLeft {
+  0% {transform:translateX(-29px) rotate(-18deg)}
+  23% {transform:translateX(-9px) rotate(-8deg)}
+  32% {transform:translateX(25px) rotate(9deg)}
+  38% {transform:translateX(18px) rotate(4deg)}
+  46%,100% {transform:translateX(21px) rotate(6deg)}
+}
+
+@keyframes clinkRight {
+  0% {transform:translateX(29px) rotate(18deg)}
+  23% {transform:translateX(9px) rotate(8deg)}
+  32% {transform:translateX(-25px) rotate(-9deg)}
+  38% {transform:translateX(-18px) rotate(-4deg)}
+  46%,100% {transform:translateX(-21px) rotate(-6deg)}
+}
+
+@keyframes clinkFlash {
+  0%,30%,39%,100% {
+    opacity:0;
+    transform:translateX(-50%) scale(0);
+  }
+  32% {
+    opacity:1;
+    transform:translateX(-50%) scale(1.6);
+  }
+  35% {
+    opacity:.8;
+    transform:translateX(-50%) scale(2.6);
+  }
+}
+
+@keyframes floatUp {
+  0%,28% {
+    opacity:0;
+    transform:translate(0,15px) scale(.35);
+  }
+  38% {
+    opacity:1;
+    transform:
+      translate(calc(var(--drift)*.2),-7px)
+      scale(.85);
+  }
+  70% {
+    opacity:.85;
+    transform:
+      translate(calc(var(--drift)*.7),-66px)
+      scale(1.05);
+  }
+  100% {
+    opacity:0;
+    transform:
+      translate(var(--drift),-135px)
+      scale(.7);
+  }
+}
+
+@keyframes signFlash {
+  0%,29% {filter:brightness(.85)}
+  32% {
+    filter:brightness(1.65)
+      drop-shadow(0 0 10px #fff4a8);
+  }
+  36% {filter:brightness(1.2)}
+  40% {
+    filter:brightness(1.35)
+      drop-shadow(0 0 8px #ff42d2);
+  }
+  47%,100% {filter:brightness(1.08)}
+}
+
+.neon-marquee.clink-active h1 {
+  animation: headerClinkFlash 3.6s linear 1 both;
+}
+
+@keyframes headerClinkFlash {
+  0%,29% {filter:brightness(1)}
+  32% {
+    filter:brightness(1.55);
+    color:#fffefa;
+    text-shadow:
+      0 0 5px #fff,
+      0 0 12px #fff,
+      0 0 25px #fff1a0,
+      0 0 42px #ffdd51;
+  }
+  36% {filter:brightness(1.15)}
+  40% {filter:brightness(1.3)}
+  48%,100% {filter:brightness(1)}
+}
+
+@media(max-width:370px) {
+  .neon-marquee {
+    grid-template-columns:54px minmax(0,1fr) 54px;
+    min-height:95px;
+  }
+  .neon-marquee h1 {
+    font-size:clamp(34px,10.5vw,46px);
+  }
+  .neon-symbol {
+    width:62px;
+    height:78px;
+  }
+  .grid {gap:7px}
+  .gift {min-height:137px}
+  .picture {height:70px}
+  .picture span {font-size:43px}
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .neon-symbol,
+  h1,
+  .success.play .flute,
+  .success.play .particle,
+  .success.play .impact,
+  .success.play h2,
+  .neon-marquee.clink-active h1 {
+    animation:none !important;
+  }
+  .flute.left {
+    transform:translateX(21px) rotate(6deg);
+  }
+  .flute.right {
+    transform:translateX(-21px) rotate(-6deg);
+  }
+  .particle {display:none}
+}
 </style>
+</head>
+
+<body>
+
+<svg class="wallpaper" aria-hidden="true">
+<defs>
+<pattern id="cheersPattern"
+  width="240" height="246"
+  patternUnits="userSpaceOnUse">
+
+<g fill="none"
+  stroke="#ffd0e6"
+  stroke-width="3.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  opacity=".72">
+
+<path d="M37 37 C20 16 3 34 16 51 C23 61 37 70 41 75 C48 63 72 48 64 32 C58 20 44 22 37 37Z"/>
+<path d="M5 28 L0 20 M74 31 L84 24 M72 65 L81 72 M28 81 L24 90"/>
+
+<g transform="rotate(13 170 54)">
+<path d="M145 30 Q171 33 197 30 L171 72Z M171 72 L171 94 M154 95 Q171 91 188 95 M179 33 L190 16"/>
+<path d="M149 40 Q171 44 193 40"/>
+</g>
+
+<g transform="rotate(-14 89 136)">
+<path d="M70 109 Q90 105 111 109 C111 137 104 149 91 155 C79 149 70 133 70 109Z M91 155 L91 178 M75 181 Q91 175 107 181"/>
+<path d="M74 127 Q91 132 107 125"/>
+</g>
+
+<path d="M178 163 C164 148 146 161 156 177 C162 187 179 199 181 201 C188 190 209 181 206 165 C203 151 186 150 178 163Z"/>
+<path d="M154 171 L143 165 M207 174 L219 169 M174 204 L168 216"/>
+<path d="M118 31 L122 19 M130 37 L141 31 M117 47 L130 53 M17 160 L27 156 M22 173 L34 171 M214 115 L225 109 M212 128 L228 128"/>
+
+<circle cx="134" cy="107" r="5"/>
+<circle cx="147" cy="96" r="3"/>
+<circle cx="143" cy="117" r="2"/>
+<path d="M32 218 Q42 205 52 218 Q62 231 72 218"/>
+</g>
+
+<g fill="#ffe3ee"
+  opacity=".75"
+  font-family="Georgia,serif"
+  font-style="italic">
+<text x="6" y="115" font-size="19"
+  transform="rotate(-11 6 115)">cheers!</text>
+<text x="134" y="233" font-size="18"
+  transform="rotate(9 134 233)">cheers</text>
+</g>
+
+<g fill="#ffe5b0" opacity=".65">
+<circle cx="223" cy="207" r="3"/>
+<circle cx="228" cy="198" r="2"/>
+<circle cx="10" cy="194" r="2.5"/>
+</g>
+
+</pattern>
+</defs>
+<rect width="100%" height="100%"
+  fill="url(#cheersPattern)"/>
+</svg>
+
+<main>
+
+<header>
+<div class="neon-marquee">
+
+<svg class="neon-symbol neon-heart"
+  viewBox="0 0 70 82" aria-hidden="true">
+<path d="M35 66 C26 58 8 43 8 27 C8 13 25 9 35 23 C45 9 62 13 62 27 C62 43 44 58 35 66Z"/>
+</svg>
+
+<h1>CHEERS!</h1>
+
+<svg class="neon-symbol neon-cocktail"
+  viewBox="0 0 75 82" aria-hidden="true">
+<path d="M7 16 H67 L37 49 Z M37 49 V69 M20 70 H54 M43 18 L57 5 M55 7 H68 M22 29 H52"/>
+<circle cx="30" cy="24" r="3"/>
+</svg>
+
+</div>
+<div class="tagline">A little gift. A big smile.</div>
+</header>
+
+<!-- WORKER PROFILE ON MAIN MENU -->
+
+<div class="cheers-recipient">
+  <div class="cheers-recipient-photo"></div>
+  <div class="cheers-recipient-caption">
+    Send a little happiness to
+  </div>
+  <div class="cheers-recipient-name">
+    Recipient
+  </div>
+</div>
+
+<div id="profileStatus"
+  class="profile-status"
+  role="status"></div>
+
+<!-- PERSONAL SHARING AREA -->
+
+<div id="workerTools"
+  class="worker-tools"
+  hidden>
+
+  <div class="worker-tools-title">
+    Your personal Cheers link
+  </div>
+
+  <p>
+    Share this with someone on Telegram
+    so they can buy you a drink.
+  </p>
+
+  <button class="action"
+    id="shareCheers"
+    type="button">
+    Share my Cheers link
+  </button>
+
+  <div id="shareStatus"
+    role="status"></div>
+</div>
+
+<!-- SEVEN DRINKS -->
+
+<div class="grid" id="gifts"></div>
+
+<footer>
+  Cheers · Stripe sandbox test · No real charges
+</footer>
+
+</main>
+
+<!-- PAYMENT SCREEN -->
+
+<div class="overlay"
+  id="overlay"
+  role="dialog"
+  aria-label="Gift payment"
+  aria-modal="true"
+  aria-hidden="true">
+
+<div class="sheet">
+
+<div class="handle"></div>
+
+<div id="payment">
+
+<div class="cheers-recipient">
+  <div class="cheers-recipient-photo"></div>
+  <div class="cheers-recipient-caption">
+    Send a little happiness to
+  </div>
+  <div class="cheers-recipient-name">
+    Recipient
+  </div>
+</div>
+
+<h2>Send a little happiness</h2>
+
+<p>
+  Your gift for
+  <span id="paymentRecipientName">Recipient</span>
+</p>
+
+<div class="summary">
+  <span id="selectedName"></span>
+  <strong id="selectedPrice"></strong>
+</div>
+
+<button class="action"
+  id="payButton"
+  type="button">
+  Continue to secure payment
+</button>
+
+<div id="checkoutStatus" role="status"></div>
+<div id="checkoutError" role="alert"></div>
+<div id="checkoutContainer"></div>
+
+<button class="action secondary"
+  id="cancelButton"
+  type="button">
+  Back to gifts
+</button>
+
+<p class="note">
+  Stripe test mode. No real money will be charged.
+</p>
+
+</div>
+
+<!-- THANK-YOU SCREEN -->
+
+<div class="success" id="success">
+
+<div class="cheers-recipient">
+  <div class="cheers-recipient-photo"></div>
+  <div class="cheers-recipient-caption">
+    Send a little happiness to
+  </div>
+  <div class="cheers-recipient-name">
+    Recipient
+  </div>
+</div>
+
+<div class="celebration"
+  aria-label="Two champagne glasses clink">
+
+<svg class="flute left"
+  viewBox="0 0 110 180"
+  aria-hidden="true">
+<path class="drink"
+  d="M29 51 Q29 88 55 105 Q81 88 81 51Z"/>
+<path class="glass"
+  d="M25 15 L85 15 Q87 91 55 108 Q23 91 25 15Z"/>
+<path class="shine"
+  d="M35 27 L35 61"/>
+<path class="stem"
+  d="M55 108 V160 M34 164 Q55 158 76 164"/>
+<circle class="tiny" cx="44" cy="69" r="3"/>
+<circle class="tiny" cx="61" cy="85" r="2.5"/>
+<circle class="tiny" cx="65" cy="58" r="2"/>
+</svg>
+
+<svg class="flute right"
+  viewBox="0 0 110 180"
+  aria-hidden="true">
+<path class="drink"
+  d="M29 51 Q29 88 55 105 Q81 88 81 51Z"/>
+<path class="glass"
+  d="M25 15 L85 15 Q87 91 55 108 Q23 91 25 15Z"/>
+<path class="shine"
+  d="M35 27 L35 61"/>
+<path class="stem"
+  d="M55 108 V160 M34 164 Q55 158 76 164"/>
+<circle class="tiny" cx="44" cy="69" r="3"/>
+<circle class="tiny" cx="61" cy="85" r="2.5"/>
+<circle class="tiny" cx="65" cy="58" r="2"/>
+</svg>
+
+<div class="impact" aria-hidden="true"></div>
+<div id="particles" aria-hidden="true"></div>
+
+</div>
+
+<h2>CHEERS!</h2>
+<p id="successMessage"></p>
+
+<button class="action"
+  id="chatButton"
+  type="button">
+  Back to chat
+</button>
+
+<button class="action secondary"
+  id="backButton"
+  type="button">
+  Send another gift
+</button>
+
+<button class="action secondary"
+  id="closeCheersButton"
+  type="button">
+  Close Cheers ✕
+</button>
+
+</div>
+</div>
+</div>
 
 <script>
+"use strict";
+
 /*
- * CHEERS — UNIVERSAL RECIPIENT PROFILE
- *
- * No individual worker names or photos
- * are hard-coded.
- *
- * Andy's backend can provide:
- * {
- *   "name": "Telegram display name",
- *   "photoUrl": "https://..."
- * }
- *
- * The photo URL must be a browser-accessible
- * HTTPS image, not a Telegram file_id.
- */
+  CHEERS CONFIGURATION
 
-(function () {
-  "use strict";
+  Stripe publishable TEST key.
+  This is not a Stripe secret key.
 
-  const params = new URLSearchParams(window.location.search);
- const telegramUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
- const workerId = telegramUser?.id;
- const profileUrl = "https://boaty.app.n8n.cloud/webhook/cheers-telegram-profile";
- const profileRequest = { worker_id: workerId };
- const workerName = [telegramUser?.first_name, telegramUser?.last_name].filter(Boolean).join(" ");
- const recipientId = params.get("worker_id");
- if (recipientId) {
-  profileRequest.worker_id = recipientId;
+  Do not put Telegram bot tokens or
+  Stripe secret keys in this file.
+*/
+
+const STRIPE_PUBLISHABLE_KEY =
+"pk_test_51URxGYBWoGBQK6CmRjUTgYV6ZFzMKYZIIi9abR9xO76gmSWkHYhjUKXV2bpWAGv84t8fUY69pgnhYEiI5gXpGoqq00RVbigoNe";
+
+const CHECKOUT_URL =
+"https://boaty.app.n8n.cloud/webhook/cheers-payment";
+
+const PROFILE_URL =
+"https://boaty.app.n8n.cloud/webhook/cheers-telegram-profile";
+
+const BOT_APP_LINK =
+"https://t.me/CheersGiftsBot?startapp=";
+
+/*
+  TELEGRAM IDENTITY
+
+  The Telegram viewer is the person
+  currently opening the Mini App.
+
+  When a customer opens a worker's
+  personal link, the worker is identified
+  by the startapp reference.
+
+  initDataUnsafe is suitable for a
+  display preview only.
+
+  The backend must validate Telegram
+  initData before registering a worker
+  or allocating money.
+*/
+
+const tg = window.Telegram?.WebApp;
+
+if (tg) {
+  tg.ready();
+  tg.expand();
 }
- 
- const profile = {
-  id: recipientId || workerId,    
-  name: params.get("recipient_name") || workerName || "Recipient",    
- photoUrl: params.get("recipient_photo") || telegramUser?.photo_url || ""  
- };
- async function loadWorkerProfile() {
-  if (!profileRequest.worker_id) return; 
+
+const viewer =
+  tg?.initDataUnsafe?.user || null;
+
+const params =
+  new URLSearchParams(window.location.search);
+
+const launchParam =
+  tg?.initDataUnsafe?.start_param ||
+  params.get("tgWebAppStartParam") ||
+  "";
+
+const workerMatch =
+  /^worker_([0-9]{1,20})$/.exec(launchParam);
+
+const targetWorkerId =
+  workerMatch ? workerMatch[1] : null;
+
+const isWorkerView =
+  !targetWorkerId && !!viewer?.id;
+
+const recipient = {
+  id: targetWorkerId,
+  name: "Recipient",
+  photoUrl: "",
+  verified: false
+};
+
+/*
+  UTILITIES
+*/
+
+function displayName(user) {
+  return [
+    user?.first_name,
+    user?.last_name
+  ].filter(Boolean).join(" ").trim();
+}
+
+function safePhoto(value) {
+  if (!value) return "";
+
   try {
-   const response = await fetch(profileUrl, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(profileRequest)
-});
+    const url = new URL(value);
 
-if (!response.ok) {
-  throw new Error("Profile request failed");
-}
-
-const data = await response.json();
-
-if (data.name) {
-  profile.name = data.name;
-  recipient.name = data.name;
-}
-
-if (data.photoUrl) {
-  profile.photoUrl = data.photoUrl;
-  }
-} catch (error) {
-  console.error("Could not load worker profile:", error);
-}
-}
-  function makeProfile() {
-    const container = document.createElement("div");
-    container.className = "cheers-recipient";
-
-    const photo = document.createElement("div");
-    photo.className = "cheers-recipient-photo";
-
-    const initial = document.createElement("span");
-    initial.textContent =
-      Array.from(profile.name.trim())[0]?.toUpperCase() || "?";
-
-    photo.appendChild(initial);
-
-    if (profile.photoUrl) {
-      try {
-        const url = new URL(profile.photoUrl);
-
-        if (url.protocol === "https:") {
-          const image = document.createElement("img");
-
-          image.alt = profile.name + "'s Telegram photo";
-          image.style.width = "100%";
-          image.style.height = "100%";
-          image.style.objectFit = "cover";
-
-          image.onload = function () {
-            photo.replaceChildren(image);
-          };
-
-          image.src = url.href;
-        }
-      } catch (error) {
-        console.warn("Recipient photo URL unavailable");
-      }
+    if (url.protocol !== "https:") {
+      return "";
     }
 
-    const caption = document.createElement("div");
-    caption.className = "cheers-recipient-caption";
-    caption.textContent = "Send a little happiness to";
+    return url.href;
+  } catch (error) {
+    return "";
+  }
+}
 
-    const name = document.createElement("div");
-    name.className = "cheers-recipient-name";
-    name.textContent = profile.name;
+function profileNotice(message) {
+  document.getElementById("profileStatus")
+    .textContent = message;
+}
 
-    container.append(photo, caption, name);
-    return container;
+/*
+  UPDATE ALL THREE PROFILE DISPLAYS
+
+  Every name and photograph is updated
+  from the same recipient object.
+*/
+
+function showRecipient() {
+  document.querySelectorAll(
+    ".cheers-recipient-name"
+  ).forEach(element => {
+    element.textContent = recipient.name;
+  });
+
+  document.getElementById(
+    "paymentRecipientName"
+  ).textContent = recipient.name;
+
+  document.querySelectorAll(
+    ".cheers-recipient-photo"
+  ).forEach(element => {
+
+    element.replaceChildren();
+
+    const fallback =
+      document.createElement("span");
+
+    fallback.textContent =
+      Array.from(recipient.name.trim())[0]
+        ?.toUpperCase() || "?";
+
+    element.appendChild(fallback);
+
+    const photo = safePhoto(
+      recipient.photoUrl
+    );
+
+    if (!photo) return;
+
+    const image = new Image();
+
+    image.alt =
+      recipient.name + "'s Telegram photo";
+
+    image.onload = () => {
+      element.replaceChildren(image);
+    };
+
+    image.onerror = () => {
+      console.warn(
+        "Telegram profile image could not load"
+      );
+    };
+
+    image.src = photo;
+  });
+}
+
+/*
+  LOAD THE CORRECT PERSON
+
+  Worker opening Cheers:
+  show their own Telegram profile preview.
+
+  Customer opening worker's link:
+  fetch the WORKER profile from n8n.
+
+  Never substitute the customer's
+  profile for the worker's profile.
+*/
+
+async function loadRecipient() {
+
+  if (isWorkerView) {
+
+    recipient.id = String(viewer.id);
+
+    recipient.name =
+      displayName(viewer) || "Your profile";
+
+    recipient.photoUrl =
+      safePhoto(viewer.photo_url);
+
+    showRecipient();
+
+    document.getElementById(
+      "workerTools"
+    ).hidden = false;
+
+    profileNotice(
+      "Your profile preview. Share your link " +
+      "to let someone send you a gift."
+    );
+
+    /*
+      This is only a local preview.
+      A backend must securely verify and
+      register this Telegram worker.
+    */
+
+    return;
   }
 
-  // Drinks menu.
-  document.querySelector("main .profile")
-    .replaceWith(makeProfile());
+  if (!targetWorkerId) {
 
-  // Gift selection and payment.
-  document.getElementById("payment")
-    .prepend(makeProfile());
+    profileNotice(
+      "Open a personal Cheers link from " +
+      "a worker to send a gift."
+    );
 
-  // Thank-you screen.
-  document.getElementById("success")
-    .prepend(makeProfile());
+    return;
+  }
 
-  document.getElementById("paymentRecipientName")
-    .textContent = profile.name;
-loadWorkerProfile().then(() => {
-  document.querySelectorAll(".cheers-recipient-name").forEach(el => el.textContent = profile.name);
-});)();
+  profileNotice(
+    "Loading recipient profile..."
+  );
+
+  try {
+
+    const response = await fetch(
+      PROFILE_URL,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          worker_id: targetWorkerId
+        })
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        "Profile server returned " +
+        response.status
+      );
+    }
+
+    const data = await response.json();
+
+    if (
+      !data ||
+      typeof data.name !== "string" ||
+      !data.name.trim()
+    ) {
+      throw new Error(
+        "Profile server did not return a name"
+      );
+    }
+
+    recipient.name = data.name.trim();
+
+    recipient.photoUrl =
+      safePhoto(data.photoUrl);
+
+    /*
+      This means the lookup succeeded.
+      The backend itself must still
+      authenticate and validate records.
+    */
+
+    recipient.verified = true;
+
+    showRecipient();
+
+    profileNotice(
+      recipient.photoUrl
+        ? ""
+        : "Profile photo not available yet."
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Cheers profile lookup failed:",
+      error
+    );
+
+    profileNotice(
+      "Recipient unavailable. Please " +
+      "try this link again later."
+    );
+  }
+}
+
+/*
+  WORKER'S PERSONAL SHARE LINK
+
+  The worker sends their own link
+  to a customer in Telegram.
+
+  The link identifies the intended
+  recipient, not the viewer.
+
+  No manual worker ID entry.
+*/
+
+document.getElementById(
+  "shareCheers"
+).addEventListener("click", () => {
+
+  if (!viewer?.id) {
+    profileNotice(
+      "Please open Cheers inside Telegram."
+    );
+    return;
+  }
+
+  const link =
+    BOT_APP_LINK +
+    encodeURIComponent(
+      "worker_" + viewer.id
+    );
+
+  const message =
+    "Buy me a drink on Cheers!";
+
+  const shareUrl =
+    "https://t.me/share/url?url=" +
+    encodeURIComponent(link) +
+    "&text=" +
+    encodeURIComponent(message);
+
+  if (tg?.openTelegramLink) {
+
+    tg.openTelegramLink(shareUrl);
+
+  } else if (navigator.share) {
+
+    navigator.share({
+      text: message,
+      url: link
+    }).catch(() => {});
+
+  } else if (navigator.clipboard) {
+
+    navigator.clipboard.writeText(
+      message + " " + link
+    ).then(() => {
+
+      document.getElementById(
+        "shareStatus"
+      ).textContent =
+        "Link copied. Paste it into your chat.";
+
+    }).catch(() => {
+
+      document.getElementById(
+        "shareStatus"
+      ).textContent = link;
+
+    });
+
+  } else {
+
+    document.getElementById(
+      "shareStatus"
+    ).textContent = link;
+  }
+});
+
+/*
+  THE SEVEN APPROVED GIFTS
+*/
+
+const gifts = [
+  {
+    id: "coffee",
+    name: "Coffee",
+    price: 3.00,
+    icon: "☕"
+  },
+  {
+    id: "beer",
+    name: "Beer",
+    price: 4.99,
+    icon: "🍺"
+  },
+  {
+    id: "cocktail",
+    name: "Cocktail",
+    price: 5.99,
+    icon: "🍸"
+  },
+  {
+    id: "wine",
+    name: "Wine",
+    price: 6.99,
+    icon: "🍷"
+  },
+  {
+    id: "shot",
+    name: "Shot",
+    price: 4.99,
+    icon: "🥃"
+  },
+  {
+    id: "champagne",
+    name: "Champagne",
+    price: 9.99,
+    icon: "🍾"
+  },
+  {
+    id: "bell",
+    name: "Ring the Bell",
+    price: 14.99,
+    icon: "🔔"
+  }
+];
+
+/*
+  PAGE ELEMENTS
+*/
+
+const marquee =
+  document.querySelector(".neon-marquee");
+
+const grid =
+  document.getElementById("gifts");
+
+const overlay =
+  document.getElementById("overlay");
+
+const payment =
+  document.getElementById("payment");
+
+const success =
+  document.getElementById("success");
+
+const payButton =
+  document.getElementById("payButton");
+
+const checkoutContainer =
+  document.getElementById("checkoutContainer");
+
+const checkoutStatus =
+  document.getElementById("checkoutStatus");
+
+const checkoutError =
+  document.getElementById("checkoutError");
+
+let chosenGift = null;
+let embeddedCheckout = null;
+let checkoutBusy = false;
+
+/*
+  BUILD THE SEVEN GIFT BUTTONS
+*/
+
+for (const gift of gifts) {
+
+  const button =
+    document.createElement("button");
+
+  button.className = "gift";
+  button.type = "button";
+
+  const picture =
+    document.createElement("div");
+
+  picture.className = "picture";
+
+  const icon =
+    document.createElement("span");
+
+  icon.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  icon.textContent = gift.icon;
+
+  picture.appendChild(icon);
+
+  const name =
+    document.createElement("span");
+
+  name.className = "name";
+  name.textContent = gift.name;
+
+  const price =
+    document.createElement("span");
+
+  price.className = "price";
+
+  price.textContent =
+    "$" + gift.price.toFixed(2);
+
+  button.append(
+    picture,
+    name,
+    price
+  );
+
+  button.addEventListener(
+    "click",
+    () => openGift(gift)
+  );
+
+  grid.appendChild(button);
+}
+
+/*
+  STRIPE INITIALISATION
+*/
+
+let stripe = null;
+
+function getStripe() {
+
+  if (stripe) return stripe;
+
+  if (
+    typeof window.Stripe !== "function"
+  ) {
+    throw new Error(
+      "Stripe could not load. " +
+      "Check your internet connection."
+    );
+  }
+
+  stripe = window.Stripe(
+    STRIPE_PUBLISHABLE_KEY
+  );
+
+  return stripe;
+}
+
+/*
+  OPEN A GIFT
+
+  Do not allow payment if the
+  recipient could not be identified.
+*/
+
+function openGift(gift) {
+
+  if (
+    !targetWorkerId ||
+    !recipient.verified
+  ) {
+
+    profileNotice(
+      isWorkerView
+        ? "Share your link with a customer " +
+          "to receive gifts."
+        : "Recipient must load before " +
+          "checkout can open."
+    );
+
+    return;
+  }
+
+  if (checkoutBusy) return;
+
+  resetCheckout();
+
+  chosenGift = gift;
+
+  document.getElementById(
+    "selectedName"
+  ).textContent = gift.name;
+
+  document.getElementById(
+    "selectedPrice"
+  ).textContent =
+    "$" + gift.price.toFixed(2);
+
+  payment.style.display = "block";
+  success.style.display = "none";
+
+  success.classList.remove("play");
+  marquee.classList.remove(
+    "clink-active"
+  );
+
+  overlay.classList.add("open");
+
+  overlay.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+}
+
+/*
+  RESET CHECKOUT
+*/
+
+function resetCheckout() {
+
+  if (embeddedCheckout) {
+
+    try {
+      embeddedCheckout.destroy();
+    } catch (error) {
+      console.warn(
+        "Could not destroy checkout",
+        error
+      );
+    }
+
+    embeddedCheckout = null;
+  }
+
+  checkoutContainer.replaceChildren();
+
+  checkoutStatus.textContent = "";
+  checkoutError.textContent = "";
+
+  payButton.style.display = "block";
+  payButton.disabled = false;
+
+  payButton.textContent =
+    "Continue to secure payment";
+}
+
+/*
+  CLOSE PAYMENT SCREEN
+*/
+
+function closeOverlay() {
+
+  if (checkoutBusy) return;
+
+  resetCheckout();
+
+  overlay.classList.remove("open");
+
+  overlay.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  success.classList.remove("play");
+
+  marquee.classList.remove(
+    "clink-active"
+  );
+}
+
+document.getElementById(
+  "cancelButton"
+).addEventListener(
+  "click",
+  closeOverlay
+);
+
+document.getElementById(
+  "backButton"
+).addEventListener(
+  "click",
+  closeOverlay
+);
+
+overlay.addEventListener(
+  "click",
+  event => {
+
+    if (event.target === overlay) {
+      closeOverlay();
+    }
+  }
+);
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (event.key === "Escape") {
+      closeOverlay();
+    }
+  }
+);
+
+/*
+  STRIPE CHECKOUT
+
+  The backend must calculate prices
+  using the gift ID.
+
+  The backend must independently
+  validate the recipient.
+
+  Sending worker_id does NOT
+  prove that the worker owns it.
+
+  Verified payment delivery requires
+  a server-side Stripe webhook.
+*/
+
+payButton.addEventListener(
+  "click",
+  async () => {
+
+    if (
+      !chosenGift ||
+      checkoutBusy ||
+      !recipient.verified
+    ) {
+      return;
+    }
+
+    checkoutBusy = true;
+
+    payButton.disabled = true;
+
+    payButton.textContent =
+      "Opening payment...";
+
+    checkoutError.textContent = "";
+
+    checkoutStatus.textContent =
+      "Connecting to Stripe test checkout...";
+
+    try {
+
+      const stripeInstance =
+        getStripe();
+
+      const response = await fetch(
+        CHECKOUT_URL,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+          body: JSON.stringify({
+            gift: chosenGift.id,
+            worker_id: recipient.id
+          })
+        }
+      );
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Payment server returned error " +
+          response.status
+        );
+      }
+
+      const data =
+        await response.json();
+
+      if (
+        !data ||
+        typeof data.clientSecret !== "string" ||
+        !data.clientSecret
+      ) {
+
+        throw new Error(
+          "The payment server did not " +
+          "return a valid checkout secret."
+        );
+      }
+
+      embeddedCheckout =
+        await stripeInstance
+          .initEmbeddedCheckout({
+
+            clientSecret:
+              data.clientSecret,
+
+            onComplete: () => {
+
+              /*
+                Sandbox celebration only.
+
+                This is not verified
+                gift delivery.
+              */
+
+              if (
+                STRIPE_PUBLISHABLE_KEY
+                  .startsWith("pk_test_")
+              ) {
+
+                playCelebration(
+                  chosenGift
+                );
+
+              } else {
+
+                checkoutStatus.textContent =
+                  "Waiting for verified " +
+                  "payment confirmation.";
+              }
+
+              payButton.style.display =
+                "none";
+            }
+          });
+
+      checkoutStatus.textContent =
+        "Secure Stripe test checkout";
+
+      embeddedCheckout.mount(
+        "#checkoutContainer"
+      );
+
+      payButton.style.display =
+        "none";
+
+    } catch (error) {
+
+      console.error(
+        "Cheers checkout error:",
+        error
+      );
+
+      checkoutStatus.textContent = "";
+
+      checkoutError.textContent =
+        "Checkout could not open: " +
+        error.message +
+        " No payment was made by " +
+        "this attempt.";
+
+      payButton.style.display =
+        "block";
+
+      payButton.textContent =
+        "Try again";
+
+    } finally {
+
+      checkoutBusy = false;
+      payButton.disabled = false;
+    }
+  }
+);
+
+/*
+  CHAMPAGNE CELEBRATION
+*/
+
+function playCelebration(gift) {
+
+  if (!gift) return;
+
+  document.getElementById(
+    "successMessage"
+  ).textContent =
+    "A " +
+    gift.name.toLowerCase() +
+    " for " +
+    recipient.name +
+    ". A little gift. A big smile.";
+
+  payment.style.display = "none";
+  success.style.display = "block";
+
+  success.classList.remove("play");
+
+  void success.offsetWidth;
+
+  success.classList.add("play");
+
+  marquee.classList.remove(
+    "clink-active"
+  );
+
+  void marquee.offsetWidth;
+
+  marquee.classList.add(
+    "clink-active"
+  );
+}
+
+marquee.querySelector("h1")
+  .addEventListener(
+    "animationend",
+    event => {
+
+      if (
+        event.animationName ===
+        "headerClinkFlash"
+      ) {
+
+        marquee.classList.remove(
+          "clink-active"
+        );
+      }
+    }
+  );
+
+/*
+  CELEBRATION PARTICLES
+*/
+
+const particles =
+  document.getElementById(
+    "particles"
+  );
+
+const symbols = [
+  "♡","♥","✦","✧","○",
+  "◦","✧","♡","○","✦",
+  "◦","♥","✧","○","✦",
+  "♡","◦","✧","○","♥"
+];
+
+for (
+  let i = 0;
+  i < symbols.length;
+  i++
+) {
+
+  const element =
+    document.createElement("span");
+
+  element.className = "particle";
+
+  element.textContent =
+    symbols[i];
+
+  const x =
+    23 + (i * 37) % 54;
+
+  const y =
+    36 + (i * 19) % 45;
+
+  element.style.setProperty(
+    "--x",
+    x + "%"
+  );
+
+  element.style.setProperty(
+    "--y",
+    y + "%"
+  );
+
+  element.style.setProperty(
+    "--s",
+    (13 + (i % 4) * 4) + "px"
+  );
+
+  element.style.setProperty(
+    "--c",
+    i % 4 === 0
+      ? "#ff83ca"
+      : i % 3 === 0
+        ? "#fff5c0"
+        : "#ffd56c"
+  );
+
+  element.style.setProperty(
+    "--drift",
+    (
+      (i % 2 ? 1 : -1) *
+      (20 + (i * 17) % 58)
+    ) + "px"
+  );
+
+  element.style.setProperty(
+    "--delay",
+    ((i % 5) * .08) + "s"
+  );
+
+  particles.appendChild(element);
+}
+
+/*
+  BACK TO TELEGRAM
+*/
+
+function returnToTelegram() {
+
+  if (tg) {
+    tg.close();
+  } else {
+    closeOverlay();
+  }
+}
+
+document.getElementById(
+  "chatButton"
+).addEventListener(
+  "click",
+  returnToTelegram
+);
+
+document.getElementById(
+  "closeCheersButton"
+).addEventListener(
+  "click",
+  returnToTelegram
+);
+
+/*
+  INITIALISE
+
+  Show a neutral recipient until
+  the correct profile is available.
+*/
+
+showRecipient();
+loadRecipient();
+
 </script>
+
 </body>
 </html>
-
